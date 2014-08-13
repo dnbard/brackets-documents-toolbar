@@ -1,0 +1,29 @@
+.ext-documents{
+    height: 35px;
+    background: red;
+}
+
+.ext-documents .documents-holder{
+    padding-top: 14px;
+    padding-left: 10px;
+}
+
+.ext-documents .documents-holder > .document{
+    padding-left: 12px;
+    padding-right: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    position: relative;
+    background: #333;
+    color: white;
+}
+
+.ext-documents .documents-holder > .document:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-width: 10px 10px 0px 0px;
+    border-style: solid;
+    border-color: rgb(60, 63, 65) transparent transparent rgb(60, 63, 65);
+}

@@ -1,0 +1,13 @@
+{
+    "name": "dnbard.documents-toolbar",
+    "title": "Documents Toolbar",
+    "description": "",
+    "homepage": "https://github.com/dnbard/brackets-documents-toolbar",
+    "version": "0.0.1",
+    "author": "Alex Bardanov <dnbard@gmail.com>",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=0.32.0"
+    },
+    "keywords": ["document"]
+}
