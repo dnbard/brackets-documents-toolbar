@@ -5,6 +5,7 @@ var DocumentManager = require('document/DocumentManager'),
 define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
         _ = require('../vendor/lodash'),
+        Icons = require('../services/icons'),
         config = require('../config'),
         $DocumentManager = $(DocumentManager);
     
@@ -111,5 +112,15 @@ define(function(require, exports, module){
         return null;
     }
     
+    DocumentsViewModel.prototype.getDocumentIcon = function(file){
+        var name = file._name;
+        return Icons.get(name);
+    }
+
+    DocumentsViewModel.prototype.getDocumentIconColor = function(file){
+        var name = file._name;
+        return Icons.color(name);
+    }
+
     module.exports = DocumentsViewModel;
 });
