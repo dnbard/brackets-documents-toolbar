@@ -1,9 +1,11 @@
 /*jshint -W033 */
-var DocumentManager = require('document/DocumentManager');
+var DocumentManager = require('document/DocumentManager'),
+    fs = require("fileSystemImpl");
 
 define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
         _ = require('../vendor/lodash'),
+        config = require('../config'),
         $DocumentManager = $(DocumentManager);
     
     function DocumentsViewModel(){
@@ -26,6 +28,30 @@ define(function(require, exports, module){
             self.documents.remove(file);
 
             event.stopPropagation();
+        }
+
+        this.onDocumentAdd = function(){
+            fs.showOpenDialog(false, false, 'Open File', config.path, null, function(err, files){
+                if (err){
+                    console.error(err);
+                } else if (files.length === 0){
+                    // no files selected
+                    return;
+                } else {
+                    var filePath = files[0];
+                    if (!filePath){
+                        throw new Error('No file is selected')
+                    }
+
+                     DocumentManager.getDocumentForPath(filePath).done(function(doc){
+                        if (doc){
+                            DocumentManager.setCurrentDocument(doc);
+                            self.documents.push(doc.file);
+                            self.selected(doc.file);
+                        }
+                    });
+                }
+            })
         }
 
         $DocumentManager.on('workingSetAdd', function(event, file){

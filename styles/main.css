@@ -7,7 +7,7 @@
     width: 1000%;
 }
 
-.ext-documents .documents-holder > .document{
+.ext-documents .document{
     padding-left: 12px;
     padding-right: 8px;
     padding-top: 6px;
@@ -17,11 +17,10 @@
     background: #333;
     color: white;
     display: inline-block;
-    cursor: pointer;
     transition: 0.25s all;
 }
 
-.ext-documents .documents-holder > .document.selected{
+.ext-documents .document.selected{
     color: rgb(0, 184, 255);
     background: #1d1f21;
 }
@@ -30,7 +29,7 @@
     padding-right: 4px;
 }
 
-.ext-documents .documents-holder > .document:before{
+.ext-documents .document:before{
     content: "";
     position: absolute;
     top: 0;
@@ -40,11 +39,12 @@
     border-color: rgb(60, 63, 65) transparent transparent rgb(60, 63, 65);
 }
 
-.ext-documents .document-close{
+.ext-documents .document-close, .ext-documents .document.plus{
     color: white;
     transition: 0.25s all;
+    cursor: pointer;
 }
 
-.ext-documents .document-close:hover{
+.ext-documents .document-close:hover, .ext-documents .document.plus:hover{
     color: rgb(0, 184, 255);
 }

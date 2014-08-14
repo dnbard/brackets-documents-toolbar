@@ -1,9 +1,14 @@
 <div class="ext-documents">
-    <div class="documents-holder" data-bind="foreach: documents">
-        <span class="document" data-bind="css:{selected: $parent.selected() === $data}, click: $parent.onDocumentClick">
-            <span class="document-name" data-bind="text: $data._name"></span>
-            <span class="document-close" data-bind="click: $parent.onDocumentClose">
-                <i class="fa fa-times-circle"></i>
+    <div class="documents-holder">
+        <span class="document plus" data-bind="click: onDocumentAdd" title="Open file">
+            <i class="fa fa-folder-open-o"></i>
+        </span>
+        <span data-bind="foreach: documents">
+            <span class="document" data-bind="css:{selected: $parent.selected() === $data}, click: $parent.onDocumentClick">
+                <span class="document-name" data-bind="text: $data._name"></span>
+                <span class="document-close" data-bind="click: $parent.onDocumentClose">
+                    <i class="fa fa-times-circle"></i>
+                </span>
             </span>
         </span>
     </div>
