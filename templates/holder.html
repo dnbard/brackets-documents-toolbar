@@ -4,7 +4,7 @@
             <i class="fa fa-folder-open-o"></i>
         </span>
         <span data-bind="foreach: documents">
-            <span class="document" data-bind="css:{selected: $parent.selected() === $data}, click: $parent.onDocumentClick">
+            <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick">
                 <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}"></span>
                 <span class="document-name" data-bind="text: $data._name"></span>
                 <span class="document-close" data-bind="click: $parent.onDocumentClose">

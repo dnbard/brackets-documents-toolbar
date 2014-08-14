@@ -13,6 +13,10 @@ define(function(require, exports, module){
         var self = this;
         this.documents = ko.observableArray([]);
         this.selected = ko.observable(null);
+        this.selectedPath = ko.computed(function(){
+            return this.selected() ? this.selected()._path : '';
+        }, this);
+        this.changed = ko.observableArray([]);
 
         this.onDocumentClick = function(model){
             DocumentManager.getDocumentForPath(model._path)
@@ -26,7 +30,7 @@ define(function(require, exports, module){
 
         this.onDocumentClose = function(file, event){
             DocumentManager.removeFromWorkingSet(file, false);
-            self.documents.remove(file);
+            self.removeDocument(file);
 
             event.stopPropagation();
         }
@@ -50,7 +54,7 @@ define(function(require, exports, module){
                             if (!_.find(self.documents(), function(file){
                                 return file === doc.file;
                             })){
-                                self.documents.push(doc.file);
+                                self.addDocument(doc.file);
                             }
                             self.selected(doc.file);
                         }
@@ -59,12 +63,33 @@ define(function(require, exports, module){
             })
         }
 
+        this.isDocumentSelected = function(model){
+            if (self.selected() === null){
+                return false;
+            }
+            return self.selected()._path === model ? model._path : null;
+        }
+
+        this.isChanged = function(doc){
+            return _.contains(self.changed(), doc._path);
+        }
+
+        this.addDocument = function(doc){
+            this.documents.push(doc);
+        }
+
+        this.removeDocument = function(doc){
+            self.documents.remove(function(el){
+                return el._path === doc._path;
+            });
+        }
+
         $DocumentManager.on('workingSetAdd', function(event, file){
-            self.documents.push(file);
+            self.addDocument(file);
         });
 
         $DocumentManager.on('workingSetRemove', function(event, file){
-            self.documents.remove(file);
+            self.removeDocument(file)
         });
 
         $DocumentManager.on('currentDocumentChange', function(event, newDocument){
@@ -76,19 +101,34 @@ define(function(require, exports, module){
 
         $DocumentManager.on('workingSetAddList', function(event, files){
             _.each(files, function(file){
-                self.documents.push(file);
+                self.addDocument(file);
             });
         });
 
         $DocumentManager.on('workingSetRemoveList', function(event, files){
             _.each(files, function(file){
-                self.documents.remove(file);
+                self.removeDocument(file);
             });
         });
 
         $DocumentManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
 
         $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
+
+        this.isDocumentChanged = function(event, document){
+            if (document.isDirty){
+                if (_.contains(self.changed(), document.file._path)){
+                    return;
+                }
+                self.changed.push(document.file._path);
+            } else {
+                self.changed.remove(document.file._path);
+            }
+        }
+
+        $DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
+
+        $DocumentManager.on('documentSaved', this.isDocumentChanged);
     }
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
