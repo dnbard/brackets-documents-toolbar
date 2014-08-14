@@ -46,7 +46,11 @@ define(function(require, exports, module){
                      DocumentManager.getDocumentForPath(filePath).done(function(doc){
                         if (doc){
                             DocumentManager.setCurrentDocument(doc);
-                            self.documents.push(doc.file);
+                            if (!_.find(self.documents(), function(file){
+                                return file === doc.file;
+                            })){
+                                self.documents.push(doc.file);
+                            }
                             self.selected(doc.file);
                         }
                     });

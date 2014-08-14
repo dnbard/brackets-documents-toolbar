@@ -1,7 +1,7 @@
 {
     "name": "dnbard.documents-toolbar",
     "title": "Documents Toolbar",
-    "description": "",
+    "description": "Adds toolbar with a list of open documents on the top of the editor.",
     "homepage": "https://github.com/dnbard/brackets-documents-toolbar",
     "version": "0.1.0",
     "author": "Alex Bardanov <dnbard@gmail.com>",
@@ -9,5 +9,5 @@
     "engines": {
         "brackets": ">=0.32.0"
     },
-    "keywords": ["document"]
+    "keywords": ["documents", "toolbar"]
 }
