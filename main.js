@@ -7,5 +7,5 @@ define(function (require, exports, module) {
 
     require('./services/injector').init();
 
-    //require('./services/onlineTracking').init();
+    require('./services/onlineTracking').init();
 });
