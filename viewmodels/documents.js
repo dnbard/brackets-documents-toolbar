@@ -2,17 +2,21 @@
 var DocumentManager = require('document/DocumentManager');
 
 define(function(require, exports, module){
-    var ko = require('../vendor/knockout');
+    var ko = require('../vendor/knockout'),
+        AppInit = brackets.getModule('utils/AppInit');
     
     function DocumentsViewModel(){
         var self = this;
         this.documents = ko.observableArray([]);
         this.selected = ko.observable(null);
         
-        setTimeout(function(){
+        function onTimeHandler(){
             self.documents(self.getWorkingSet());
             self.selected(self.getCurrentDocument());
-        }, 2000);
+            setTimeout(onTimeHandler, 1000);
+        }
+
+        AppInit.appReady(onTimeHandler);
     }
     
     DocumentsViewModel.prototype.getWorkingSet = function(){
