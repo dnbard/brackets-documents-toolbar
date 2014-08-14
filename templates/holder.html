@@ -1,5 +1,10 @@
 <div class="ext-documents">
     <div class="documents-holder" data-bind="foreach: documents">
-        <span class="document" data-bind="text: $data._name"></span>
+        <span class="document" data-bind="css:{selected: $parent.selected() === $data}, click: $parent.onDocumentClick">
+            <span class="document-name" data-bind="text: $data._name"></span>
+            <span class="document-close" data-bind="click: $parent.onDocumentClose">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </span>
     </div>
 </div>

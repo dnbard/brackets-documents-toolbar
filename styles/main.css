@@ -1,21 +1,33 @@
 .ext-documents{
     height: 35px;
-    background: red;
 }
 
 .ext-documents .documents-holder{
-    padding-top: 14px;
-    padding-left: 10px;
+    padding-top: 7px;
+    width: 1000%;
 }
 
 .ext-documents .documents-holder > .document{
     padding-left: 12px;
-    padding-right: 24px;
-    padding-top: 4px;
+    padding-right: 8px;
+    padding-top: 6px;
     padding-bottom: 4px;
+    margin-right: 4px;
     position: relative;
     background: #333;
     color: white;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.25s all;
+}
+
+.ext-documents .documents-holder > .document.selected{
+    color: rgb(0, 184, 255);
+    background: #1d1f21;
+}
+
+.ext-documents .document-name{
+    padding-right: 4px;
 }
 
 .ext-documents .documents-holder > .document:before{
@@ -26,4 +38,13 @@
     border-width: 10px 10px 0px 0px;
     border-style: solid;
     border-color: rgb(60, 63, 65) transparent transparent rgb(60, 63, 65);
+}
+
+.ext-documents .document-close{
+    color: white;
+    transition: 0.25s all;
+}
+
+.ext-documents .document-close:hover{
+    color: rgb(0, 184, 255);
 }

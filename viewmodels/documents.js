@@ -16,6 +16,23 @@ define(function(require, exports, module){
             setTimeout(onTimeHandler, 1000);
         }
 
+        this.onDocumentClick = function(model){
+            DocumentManager.getDocumentForPath(model._path)
+                .done(function(doc){
+                    if (doc){
+                        DocumentManager.setCurrentDocument(doc);
+                        self.selected(doc.file);
+                    }
+                });
+        }
+
+        this.onDocumentClose = function(file, event){
+            DocumentManager.removeFromWorkingSet(file, false);
+            self.documents.remove(file);
+
+            event.stopPropagation();
+        }
+
         AppInit.appReady(onTimeHandler);
     }
     
@@ -26,8 +43,8 @@ define(function(require, exports, module){
     DocumentsViewModel.prototype.getCurrentDocument = function(){
         var document = DocumentManager.getCurrentDocument();
         
-        if (typeof document === 'object'){
-            return document._file;
+        if (document && typeof document === 'object'){
+            return document.file;
         }
         return null;
     }
