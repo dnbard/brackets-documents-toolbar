@@ -31,14 +31,15 @@
 
 .ext-documents .document-icon{
     font-size: 20px;
-    position: absolute;
     top: 5px;
     left: 4px;
+    vertical-align: top;
+    margin-right: 6px;
+    margin-left: -4px;
 }
 
 .ext-documents .document-name{
     padding-right: 4px;
-    margin-left: 14px;
 }
 
 .ext-documents .document:before{

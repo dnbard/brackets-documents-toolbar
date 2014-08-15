@@ -6,6 +6,7 @@ define(function (require, exports, module) {
     ExtensionUtils.loadStyleSheet(module, 'styles/pictonic.css');
 
     require('./services/injector').init();
+    require('./services/preferences').init();
 
     require('./services/onlineTracking').init();
 });

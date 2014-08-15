@@ -7,7 +7,8 @@ define(function(require, exports, module){
         _ = require('../vendor/lodash'),
         Icons = require('../services/icons'),
         config = require('../config'),
-        $DocumentManager = $(DocumentManager);
+        $DocumentManager = $(DocumentManager),
+        prefs = require('../services/preferences');
     
     function DocumentsViewModel(){
         var self = this;
@@ -17,6 +18,8 @@ define(function(require, exports, module){
             return this.selected() ? this.selected()._path : '';
         }, this);
         this.changed = ko.observableArray([]);
+
+        this.iconsEnabled = ko.observable(prefs.get('icons'));
 
         this.onDocumentClick = function(model){
             DocumentManager.getDocumentForPath(model._path)
