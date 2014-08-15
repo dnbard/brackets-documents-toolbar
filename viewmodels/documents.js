@@ -40,6 +40,7 @@ define(function(require, exports, module){
         this.onDocumentClose = function(file, event){
             DocumentManager.removeFromWorkingSet(file, false);
             self.removeDocument(file);
+            self.tooltip(null);
 
             event.stopPropagation();
         }
@@ -97,6 +98,10 @@ define(function(require, exports, module){
 
         var hoveredDocument = null;
         this.onDocumentMouseIn = function(document, event){
+            if (!prefs.get('tooltip')){
+                return;
+            }
+
             hoveredDocument = document;
             setTimeout(function(){
                 if (hoveredDocument === document){
