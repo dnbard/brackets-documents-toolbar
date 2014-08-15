@@ -107,7 +107,7 @@ define(function(require, exports, module){
                         event: event
                     });
                 }
-            }, 250);
+            }, 1);
         }
 
         this.onDocumentMouseLeave = function(){
@@ -126,6 +126,14 @@ define(function(require, exports, module){
 
         this.getCurrentProjectName = function(){
             return ProjectManager.getProjectRoot()._name;
+        }
+
+        this.getTooltipPosition = function(tooltip){
+            var $target = $(tooltip.event.target);
+            if ($target.hasClass('document-icon') || $target.hasClass('document-name')){
+                return tooltip.event.target.parentNode.offsetLeft + 'px'
+            }
+            return tooltip.event.target.offsetLeft + 'px';
         }
 
         $DocumentManager.on('workingSetAdd', function(event, file){

@@ -14,7 +14,8 @@
         </span>
     </div>
     <div data-bind="with: tooltip, visible: tooltip">
-        <div class="ext-documents-tooltip" data-bind="style:{left: event.target.offsetLeft + 'px'}">
+        <div class="ext-documents-tooltip" data-bind="style:{left: $parent.getTooltipPosition($data)}">
+            <div class="arrow-up"></div>
             <div class="ext-documents-tooltip_header">
                 <span class="document-icon" data-bind="css: $parent.getDocumentIcon(data), style:{color: $parent.getDocumentIconColor(data)}"></span>
                 <span data-bind="text: data._name"></span>
