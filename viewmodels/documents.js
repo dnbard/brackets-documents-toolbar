@@ -130,7 +130,10 @@ define(function(require, exports, module){
 
         this.getTooltipPosition = function(tooltip){
             var $target = $(tooltip.event.target);
-            if ($target.hasClass('document-icon') || $target.hasClass('document-name')){
+            if (!$target.hasClass('document')){
+                if ($target.hasClass('fa')){
+                    return tooltip.event.target.parentNode.parentNode.offsetLeft + 'px'
+                }
                 return tooltip.event.target.parentNode.offsetLeft + 'px'
             }
             return tooltip.event.target.offsetLeft + 'px';
