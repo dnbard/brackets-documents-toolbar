@@ -71,7 +71,6 @@
     top: 40px;
     left: 5px;
     z-index: 1000;
-    opacity: 0.9;
     min-width: 150px;
     max-width: 300px;
     word-break: break-all;
@@ -85,4 +84,15 @@
 
 .ext-documents-tooltip_project-name, .ext-documents-tooltip_path{
     font-weight: bold;
+}
+
+.arrow-up{
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid lightgray;
 }

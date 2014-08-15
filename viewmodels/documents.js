@@ -22,7 +22,7 @@ define(function(require, exports, module){
 
         this.iconsEnabled = ko.observable(prefs.get('icons'));
 
-        this.onDocumentClick = function(model){
+        this.onDocumentClick = function(model, event){
             DocumentManager.getDocumentForPath(model._path)
                 .done(function(doc){
                     if (doc){
@@ -30,6 +30,11 @@ define(function(require, exports, module){
                         self.selected(doc.file);
                     }
                 });
+        }
+
+        this.showContextMenu = ko.observable(false);
+        this.onDocumentContextMenu = function(){
+            self.tooltip(null);
         }
 
         this.onDocumentClose = function(file, event){
