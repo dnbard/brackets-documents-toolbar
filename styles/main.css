@@ -62,3 +62,27 @@
 .ext-documents .document-close:hover, .ext-documents .document.plus:hover{
     color: rgb(0, 184, 255);
 }
+
+.ext-documents-tooltip{
+    padding: 5px;
+    position: absolute;
+    background: lightgray;
+    color: black;
+    top: 40px;
+    left: 5px;
+    z-index: 1000;
+    opacity: 0.9;
+    min-width: 150px;
+    max-width: 300px;
+    word-break: break-all;
+}
+
+.ext-documents-tooltip_header{
+    padding: 4px 8px;
+    background: #111111;
+    color: white;
+}
+
+.ext-documents-tooltip_project-name, .ext-documents-tooltip_path{
+    font-weight: bold;
+}

@@ -1,5 +1,6 @@
 /*jshint -W033 */
 var DocumentManager = require('document/DocumentManager'),
+    ProjectManager = require('project/ProjectManager'),
     fs = require("fileSystemImpl");
 
 define(function(require, exports, module){
@@ -85,6 +86,41 @@ define(function(require, exports, module){
             self.documents.remove(function(el){
                 return el._path === doc._path;
             });
+        }
+
+        this.tooltip = ko.observable(null);
+
+        var hoveredDocument = null;
+        this.onDocumentMouseIn = function(document, event){
+            hoveredDocument = document;
+            setTimeout(function(){
+                if (hoveredDocument === document){
+                    hoveredDocument = null;
+                    self.tooltip({
+                        type: 'file',
+                        data: document,
+                        event: event
+                    });
+                }
+            }, 250);
+        }
+
+        this.onDocumentMouseLeave = function(){
+            hoveredDocument = null;
+            self.tooltip(null);
+        }
+
+        this.getRelativePath = function(file){
+            var path = ProjectManager.getProjectRoot()._path;
+            if (!file || !file._path){
+                return '';
+            }
+
+            return file._path.replace(path, './');
+        }
+
+        this.getCurrentProjectName = function(){
+            return ProjectManager.getProjectRoot()._name;
         }
 
         $DocumentManager.on('workingSetAdd', function(event, file){

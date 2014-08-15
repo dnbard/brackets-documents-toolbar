@@ -4,7 +4,7 @@
             <i class="fa fa-folder-open-o"></i>
         </span>
         <span data-bind="foreach: documents">
-            <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick">
+            <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave}">
                 <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}, visible: $parent.iconsEnabled"></span>
                 <span class="document-name" data-bind="text: $data._name"></span>
                 <span class="document-close" data-bind="click: $parent.onDocumentClose">
@@ -12,5 +12,19 @@
                 </span>
             </span>
         </span>
+    </div>
+    <div class="ext-documents-tooltip" data-bind="visible: tooltip, with: tooltip">
+        <div class="ext-documents-tooltip_header">
+            <span class="document-icon" data-bind="css: $parent.getDocumentIcon(data), style:{color: $parent.getDocumentIconColor(data)}"></span>
+            <span data-bind="text: data._name"></span>
+        </div>
+        <div>
+            <span>Project: </span>
+            <span class="ext-documents-tooltip_project-name" data-bind="text: $parent.getCurrentProjectName()"></span>
+        </div>
+        <div>
+            <span>Path:</span>
+            <span class="ext-documents-tooltip_path" data-bind="text: $parent.getRelativePath(data)"></span>
+        </div>
     </div>
 </div>
