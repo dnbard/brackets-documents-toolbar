@@ -8,8 +8,9 @@ Extension that adds new toolbar with a list of all open documents.
 Works greatly with [sidebar plus](https://github.com/sathyamoorthi/brackets-sidebar-plus) extension.
 
 Preferences
-----------
+-----------
 
 This extension is using Brackets Preferences file. You can open it in `Debug -> Show Preference File` menu.
 
 * `dnbard.documents-toolbar.icons` - set `false` to hide icons. Default is `true`
+* `dnbard.documents-toolbar.tooltip` - set `true` to show tooltips on document tabs. Default is `false`
