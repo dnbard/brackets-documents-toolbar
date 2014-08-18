@@ -144,6 +144,37 @@ define(function(require, exports, module){
             return tooltip.event.target.offsetLeft + 'px';
         }
 
+        this.getDocumentName = function(file){
+            var fileName = file._name,
+                projectPath,
+                result;
+
+            if (_.filter(this.allFileNames(), function(el){
+                return el === fileName
+            }).length > 1){
+                projectPath = ProjectManager.getProjectRoot()._path;
+                result = file._path.replace(projectPath, '');
+
+                if (result.length > 49){
+                    result = fileName;
+                }
+
+                return result;
+            } else {
+                return fileName;
+            }
+        }
+
+        this.allFileNames = ko.computed(function(){
+            var fileNames = [];
+
+            _.each(this.documents(), function(document){
+                fileNames.push(document._name);
+            });
+
+            return fileNames;
+        }, this);
+
         $DocumentManager.on('workingSetAdd', function(event, file){
             self.addDocument(file);
         });

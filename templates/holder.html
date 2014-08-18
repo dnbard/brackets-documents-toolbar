@@ -6,7 +6,7 @@
         <span data-bind="foreach: documents">
             <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu}">
                 <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}, visible: $parent.iconsEnabled"></span>
-                <span class="document-name" data-bind="text: $data._name"></span>
+                <span class="document-name" data-bind="html: $parent.getDocumentName($data)"></span>
                 <span class="document-close" data-bind="click: $parent.onDocumentClose">
                     <i class="fa fa-times-circle"></i>
                 </span>
