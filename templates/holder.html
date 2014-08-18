@@ -1,7 +1,8 @@
 <div class="ext-documents">
     <div class="documents-holder">
-        <span class="document plus" data-bind="click: onDocumentAdd" title="Open file">
-            <i class="fa fa-folder-open-o"></i>
+        <span class="document">
+            <i class="fa fa-folder-open-o button-icon" data-bind="click: onDocumentAdd" title="Open file"></i>
+            <i class="fa fa-times button-icon" data-bind="click: onDocumentCloseAll" title="Close all open documents"></i>
         </span>
         <span data-bind="foreach: documents">
             <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu}, attr:{title: $data._path}">

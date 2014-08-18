@@ -73,6 +73,10 @@ define(function(require, exports, module){
             })
         }
 
+        this.onDocumentCloseAll = function(){
+            DocumentManager.closeAll();
+        }
+
         this.isDocumentSelected = function(model){
             if (self.selected() === null){
                 return false;

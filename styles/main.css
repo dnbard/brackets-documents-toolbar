@@ -53,13 +53,20 @@
     z-index: 10;
 }
 
-.ext-documents .document-close, .ext-documents .document.plus{
+.ext-documents .document-close{
     color: white;
     transition: 0.25s all;
     cursor: pointer;
 }
 
-.ext-documents .document-close:hover, .ext-documents .document.plus:hover{
+.ext-documents .button-icon{
+    color: white;
+    transition: 0.25s all;
+    cursor: pointer;
+    margin: 0 4px;
+}
+
+.ext-documents .document-close:hover, .ext-documents .button-icon:hover{
     color: rgb(0, 184, 255);
 }
 
