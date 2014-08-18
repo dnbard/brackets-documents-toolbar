@@ -210,6 +210,8 @@ define(function(require, exports, module){
 
         $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
 
+        $DocumentManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
+
         this.isDocumentChanged = function(event, document){
             if (document.isDirty){
                 if (_.contains(self.changed(), document.file._path)){

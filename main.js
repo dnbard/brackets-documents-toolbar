@@ -6,6 +6,7 @@ define(function (require, exports, module) {
     ExtensionUtils.loadStyleSheet(module, 'styles/pictonic.css');
 
     require('./bindings/fade');
+    require('./bindings/drag');
 
     require('./services/injector').init();
     require('./services/preferences').init();
