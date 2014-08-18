@@ -64,7 +64,7 @@ define(function(require, exports, module){
                             if (!_.find(self.documents(), function(file){
                                 return file === doc.file;
                             })){
-                                self.addDocument(doc.file);
+                                DocumentManager.addToWorkingSet(doc.file, -1);
                             }
                             self.selected(doc.file);
                         }
