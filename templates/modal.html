@@ -1,0 +1,34 @@
+<div class="documents-toolbar_modal modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">Documents toolbar settings</h1>
+    </div>
+    <div class="modal-body">
+        <div class="rule-set" data-bind="foreach: rules">
+            <div class="dt-rule" data-bind="text: name, click: $parent.onSelectRule, css:{selected: $data === $parent.selectedRule()}"></div>
+        </div>
+        <div class="rule-options" data-bind="with: selectedRule">
+            <div class="_row">
+                <span>Rule name</span>
+                <input data-bind="value: name"/>
+                <div class="muted">Note: regexp are allowed</div>
+            </div>
+            <div class="_row">
+                <input type="checkbox" data-bind="checked: forThisProjectOnly"/>
+                <span>Use this rule only for specific project</span>
+                <div data-bind="visible: project() !== null">
+                    <span>Project</span>
+                    <input data-bind="value: project" />
+                </div>
+            </div>
+            <div class="_row">
+                <input type="color" value="#333333" />
+            </div>
+        </div>
+        <div class="buttons-set">
+            <button class="btn" data-bind="click: addNewRule">Add new rule</button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="dialog-button btn primary" data-button-id="ok">Close</button>
+    </div>
+</div>

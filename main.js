@@ -7,6 +7,7 @@ define(function (require, exports, module) {
 
     require('./bindings/fade');
     require('./bindings/drag');
+    require('./bindings/editableText');
 
     require('./services/injector').init();
     require('./services/preferences').init();

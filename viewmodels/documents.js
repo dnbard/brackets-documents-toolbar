@@ -9,7 +9,8 @@ define(function(require, exports, module){
         Icons = require('../services/icons'),
         config = require('../config'),
         $DocumentManager = $(DocumentManager),
-        prefs = require('../services/preferences');
+        prefs = require('../services/preferences'),
+        ModalService = require('../services/modal');
     
     function DocumentsViewModel(){
         var self = this;
@@ -178,6 +179,10 @@ define(function(require, exports, module){
 
             return fileNames;
         }, this);
+
+        this.onShowOptions = function(){
+            ModalService.showHandler();
+        }
 
         $DocumentManager.on('workingSetAdd', function(event, file){
             self.addDocument(file);
