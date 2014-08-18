@@ -94,6 +94,12 @@ define(function(require, exports){
                     }, 1);
                 }
             });
+
+            $el.on('dragover', function(event){
+                event.originalEvent.dataTransfer.dropEffect = 'move';
+
+                return false;
+            });
         }
     };
 });
