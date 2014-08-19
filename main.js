@@ -5,6 +5,8 @@ define(function (require, exports, module) {
     ExtensionUtils.loadStyleSheet(module, 'styles/awesome.css');
     ExtensionUtils.loadStyleSheet(module, 'styles/pictonic.css');
 
+    require('./services/platform').init();
+
     require('./bindings/fade');
     require('./bindings/drag');
     require('./bindings/editableText');
