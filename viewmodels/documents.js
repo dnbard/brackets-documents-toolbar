@@ -10,7 +10,8 @@ define(function(require, exports, module){
         config = require('../config'),
         $DocumentManager = $(DocumentManager),
         prefs = require('../services/preferences'),
-        ModalService = require('../services/modal');
+        ModalService = require('../services/modal'),
+        storage = require('../services/storage');
     
     function DocumentsViewModel(){
         var self = this;
@@ -182,6 +183,33 @@ define(function(require, exports, module){
 
         this.onShowOptions = function(){
             ModalService.showHandler();
+        }
+
+        this.filterCustomRules = function(file){
+            var rules = storage.getKey('rules') || {};
+
+            return _.find(rules, function(el){
+                var query = el.name.replace('*', '');
+                return file._name.indexOf(query) >= 0;
+            });
+        }
+
+        this.getDocumentBackground = function(file){
+            var rule = this.filterCustomRules(file);
+
+            if (rule){
+                return rule.background;
+            }
+            return 'inherited';
+        }
+
+        this.getDocumentNameColor = function(file){
+            var rule = this.filterCustomRules(file);
+
+            if (rule){
+                return rule.color;
+            }
+            return 'inherited';
         }
 
         $DocumentManager.on('workingSetAdd', function(event, file){

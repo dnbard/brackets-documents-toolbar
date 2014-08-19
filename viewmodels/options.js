@@ -3,6 +3,7 @@ define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
         _ = require('../vendor/lodash'),
         ProjectManager = brackets.getModule('project/ProjectManager'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
         defaultBackground = '#333333',
         defaultColor = '#FFFFFF',
         storage = require('../services/storage'),
@@ -46,6 +47,15 @@ define(function(require, exports, module){
         this.onClose = function(model, event){
             storage.setKey(storageRulesKey, ko.toJS(self.rules));
             event.preventDefault();
+            $(DocumentManager).trigger('workingSetSort');
+        }
+
+        this.getCaption = function(rule){
+            if (!rule.forThisProjectOnly()){
+                return rule.name();
+            } else {
+                return rule.name() + '[' + rule.project() + ']';
+            }
         }
     }
 

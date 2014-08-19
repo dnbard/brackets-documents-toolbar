@@ -9,7 +9,7 @@
 
 .ext-documents .document{
     padding-left: 12px;
-    padding-right: 8px;
+    padding-right: 3px;
     padding-top: 6px;
     padding-bottom: 4px;
     margin-right: 4px;
@@ -18,6 +18,7 @@
     color: white;
     display: inline-block;
     transition: 0.25s all;
+    border-right: 5px solid #333;
 }
 
 .ext-documents .document.dragged{
@@ -55,6 +56,7 @@
 .ext-documents .document.selected{
     color: rgb(0, 184, 255);
     background: #1d1f21;
+    border-right: 5px solid white;
 }
 
 .ext-documents .document.changed{
@@ -152,6 +154,17 @@
 
 .documents-toolbar_modal .dt-rule.selected{
     background: #288EDF;
+}
+
+.documents-toolbar_modal .dt-rule > *{
+    display: inline-block;
+}
+
+.documents-toolbar_modal .dt-rule > .dt-rule_background, .documents-toolbar_modal .dt-rule > .dt-rule_foreground{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    vertical-align: middle;
 }
 
 .documents-toolbar_modal .rule-options{

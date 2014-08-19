@@ -6,10 +6,10 @@
             <i class="fa fa-times button-icon" data-bind="click: onDocumentCloseAll" title="Close all open documents"></i>
         </span>
         <span class="document-holder" data-bind="foreach: documents">
-            <span class="document" data-bind="css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu}, attr:{title: $data._path}, drag: true">
+            <span class="document" data-bind="style:{background: $parent.getDocumentBackground($data)}, css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu}, attr:{title: $data._path}, drag: true">
                 <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}, visible: $parent.iconsEnabled"></span>
-                <span class="document-name" data-bind="html: $parent.getDocumentName($data)"></span>
-                <span class="document-close" data-bind="click: $parent.onDocumentClose">
+                <span class="document-name" data-bind="html: $parent.getDocumentName($data), style:{color: $parent.getDocumentNameColor($data)}"></span>
+                <span class="document-close" data-bind="click: $parent.onDocumentClose, style:{color: $parent.getDocumentNameColor($data)}">
                     <i class="fa fa-times-circle"></i>
                 </span>
             </span>

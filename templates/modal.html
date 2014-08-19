@@ -4,13 +4,17 @@
     </div>
     <div class="modal-body">
         <div class="rule-set" data-bind="foreach: rules">
-            <div class="dt-rule" data-bind="text: name, click: $parent.onSelectRule, css:{selected: $data === $parent.selectedRule()}"></div>
+            <div class="dt-rule" data-bind="click: $parent.onSelectRule, css:{selected: $data === $parent.selectedRule()}">
+                <div class="dt-rule_background" data-bind="style:{background: background}"></div>
+                <div class="dt-rule_foreground" data-bind="style:{background: color}"></div>
+                <div class="dt-rule_name" data-bind="text: $parent.getCaption($data)"></div>
+            </div>
         </div>
         <div class="rule-options" data-bind="with: selectedRule">
             <div class="_row">
                 <span>Rule name</span>
                 <input data-bind="value: name"/>
-                <div class="muted">Note: regexp are allowed</div>
+                <div class="muted" style="display: none;">Note: regexp are allowed</div>
             </div>
             <div class="_row">
                 <input type="checkbox" data-bind="checked: forThisProjectOnly"/>
