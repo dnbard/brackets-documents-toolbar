@@ -2,7 +2,9 @@
 define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
         _ = require('../vendor/lodash'),
-        ProjectManager = brackets.getModule('project/ProjectManager');
+        ProjectManager = brackets.getModule('project/ProjectManager'),
+        defaultBackground = '#333333',
+        defaultColor = '#FFFFFF';
 
     function Rule(){
         this.name = ko.observable('Change name');
@@ -17,6 +19,9 @@ define(function(require, exports, module){
                 this.project(null);
             }
         }, this));
+
+        this.background = ko.observable(defaultBackground);
+        this.color = ko.observable(defaultColor);
     }
 
     function OptionsViewModel(){

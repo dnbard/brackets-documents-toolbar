@@ -21,7 +21,13 @@
                 </div>
             </div>
             <div class="_row">
-                <input type="color" value="#333333" />
+                <span>Background:</span>
+                <div class="colorpicker" data-bind="colorpicker: background"></div>
+                <span>Color:</span>
+                <div class="colorpicker" data-bind="colorpicker: color"></div>
+            </div>
+            <div class="_row tab-preview" data-bind="style:{color: color, background: background}">
+                <p>Preview</p>
             </div>
         </div>
         <div class="buttons-set">
