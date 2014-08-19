@@ -1,0 +1,8 @@
+{
+	"browser": true,
+	"devel": true,
+	"node": true,
+	"sloppy": true,
+	"todo": true,
+	"indent": 4
+}
