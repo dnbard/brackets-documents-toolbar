@@ -11,7 +11,8 @@ define(function(require, exports, module){
         $DocumentManager = $(DocumentManager),
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
-        storage = require('../services/storage');
+        storage = require('../services/storage'),
+        contextMenu = require('../services/contextMenu');
     
     function DocumentsViewModel(){
         var self = this;
@@ -36,24 +37,23 @@ define(function(require, exports, module){
 
         this.showContextMenu = ko.observable(false);
         this.onDocumentContextMenu = function(model, event){
-            self.tooltip(null);
+            contextMenu.open(event);
         }
 
         this.onDocumentMouseDown = function(file, event){
             if (event.which === 2){
                 //middle button pressed
                 self.onDocumentClose(file, event);
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         this.onDocumentClose = function(file, event){
             DocumentManager.removeFromWorkingSet(file, false);
             self.removeDocument(file);
             self.tooltip(null);
-
-            event.stopPropagation();
         }
 
         this.onDocumentAdd = function(){
