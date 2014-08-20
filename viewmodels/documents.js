@@ -36,8 +36,8 @@ define(function(require, exports, module){
         }
 
         this.showContextMenu = ko.observable(false);
-        this.onDocumentContextMenu = function(model, event){
-            contextMenu.open(event);
+        this.onDocumentContextMenu = function(context, event){
+            contextMenu.open(context, event);
         }
 
         this.onDocumentMouseDown = function(file, event){
