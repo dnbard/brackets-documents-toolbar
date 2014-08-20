@@ -35,8 +35,17 @@ define(function(require, exports, module){
         }
 
         this.showContextMenu = ko.observable(false);
-        this.onDocumentContextMenu = function(){
+        this.onDocumentContextMenu = function(model, event){
             self.tooltip(null);
+        }
+
+        this.onDocumentMouseDown = function(file, event){
+            if (event.which === 2){
+                //middle button pressed
+                self.onDocumentClose(file, event);
+            }
+
+            return false;
         }
 
         this.onDocumentClose = function(file, event){
