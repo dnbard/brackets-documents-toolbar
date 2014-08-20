@@ -56,7 +56,7 @@
 .ext-documents .document.selected{
     color: rgb(0, 184, 255);
     background: #1d1f21;
-    border-right: 5px solid white;
+    border-right: 5px solid white !important;
 }
 
 .ext-documents .document.changed{

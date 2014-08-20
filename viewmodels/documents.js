@@ -203,6 +203,15 @@ define(function(require, exports, module){
             return 'inherited';
         }
 
+        this.getDocumentBorder = function(file){
+            var rule = this.filterCustomRules(file);
+
+            if (rule && file !== self.selected()){
+                return rule.background;
+            }
+            return 'inherited';
+        }
+
         this.getDocumentNameColor = function(file){
             var rule = this.filterCustomRules(file);
 
