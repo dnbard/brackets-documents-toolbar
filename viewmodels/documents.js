@@ -188,8 +188,17 @@ define(function(require, exports, module){
         this.filterCustomRules = function(file){
             var rules = storage.getKey('rules') || {};
 
-            return _.find(rules, function(el){
-                var query = el.name.replace('*', '');
+            return _.find(rules, function(rule){
+                var query = rule.name.replace('*', ''),
+                    currentProject;
+
+                if (rule.project){
+                    currentProject = self.getCurrentProjectName();
+                    if (rule.project !== currentProject){
+                        return false;
+                    }
+                }
+
                 return file._name.indexOf(query) >= 0;
             });
         }
