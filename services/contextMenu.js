@@ -7,6 +7,7 @@ define(function(require, exports, module){
     function ContextMenuService(){
         var openOptionsCommand,
             addNewRuleCommand,
+            ModalService = require('./modal'),
             self = this,
             contextMenuId = 'document-context_menu';
 
@@ -19,7 +20,8 @@ define(function(require, exports, module){
         });
 
         addNewRuleCommand = CommandManager.register('Change tab color', 'dte_addRule', function(){
-            console.log('+');
+            var viewModel = ModalService.showHandler();
+            viewModel.getOrCreateRule(self.context._name);
         });
 
         this.menu.addMenuItem(addNewRuleCommand);

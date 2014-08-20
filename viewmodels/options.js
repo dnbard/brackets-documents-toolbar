@@ -60,6 +60,22 @@ define(function(require, exports, module){
                 return rule.name() + '[' + rule.project() + ']';
             }
         }
+
+        this.getOrCreateRule = function(name){
+            var rule = _.find(this.rules(), function(rule){
+                return rule.name() === name;
+            });
+
+            if (!rule){
+                rule = new Rule({
+                    name: name
+                });
+                this.rules.push(rule);
+            }
+
+            this.selectedRule(rule);
+            return rule;
+        }
     }
 
     OptionsViewModel.prototype.addNewRule = function(){

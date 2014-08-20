@@ -5,9 +5,11 @@ define(function(require, exports){
         ModalViewModel = require('../viewmodels/options');
 
     function showHandler(){
-        var dlg = Dialogs.showModalDialogUsingTemplate(modalTemplate)._$dlg;
+        var dlg = Dialogs.showModalDialogUsingTemplate(modalTemplate)._$dlg,
+            viewModel = new ModalViewModel(dlg);
 
-        ko.applyBindings(new ModalViewModel(dlg), dlg[0]);
+        ko.applyBindings(viewModel, dlg[0]);
+        return viewModel;
     }
 
     exports.showHandler = showHandler;
