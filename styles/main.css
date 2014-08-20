@@ -1,7 +1,3 @@
-.ext-documents{
-    height: 35px;
-}
-
 .ext-documents .documents-holder{
     padding-top: 7px;
     width: 1000%;
@@ -146,6 +142,12 @@
     overflow-y: scroll;
     display: inline-block;
     color: white;
+    white-space: nowrap;
+}
+
+.documents-toolbar_modal .buttons-set{
+    width: 200px;
+    text-align: center;
 }
 
 .documents-toolbar_modal .dt-rule{

@@ -33,12 +33,15 @@ define(function(require, exports, module){
         var self = this;
 
         this.rules = ko.observableArray([]);
+        this.selectedRule = ko.observable(null);
 
         _.each(storage.getKey(storageRulesKey) || {}, function(rule){
             self.rules.push(new Rule(rule));
         });
 
-        this.selectedRule = ko.observable(null);
+        if(this.rules().length > 0){
+            this.selectedRule(this.rules()[0]);
+        }
 
         this.onSelectRule = function(rule){
             self.selectedRule(rule);
@@ -60,7 +63,27 @@ define(function(require, exports, module){
     }
 
     OptionsViewModel.prototype.addNewRule = function(){
-        this.rules.push(new Rule());
+        var rule = new Rule();
+
+        this.rules.push(rule);
+
+        if (this.selectedRule() === null){
+            this.selectedRule(rule);
+        }
+    }
+
+    OptionsViewModel.prototype.removeRule = function(){
+        var rule = this.selectedRule();
+        if (!rule){
+            return;
+        }
+
+        this.rules.remove(rule);
+        if (this.rules().length > 0){
+            this.selectedRule(this.rules()[0]);
+        } else {
+            this.selectedRule(null);
+        }
     }
 
     module.exports = OptionsViewModel;

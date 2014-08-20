@@ -35,7 +35,8 @@
             </div>
         </div>
         <div class="buttons-set">
-            <button class="btn" data-bind="click: addNewRule">Add new rule</button>
+            <button class="btn" data-bind="click: addNewRule">Add rule</button>
+            <button class="btn" data-bind="click: removeRule, enable: selectedRule">Remove</button>
         </div>
     </div>
     <div class="modal-footer">
