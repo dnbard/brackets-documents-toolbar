@@ -5,7 +5,7 @@
 
 .ext-documents .document{
     padding-left: 12px;
-    padding-right: 3px;
+    padding-right: 8px;
     padding-top: 6px;
     padding-bottom: 4px;
     margin-right: 4px;
@@ -14,7 +14,7 @@
     color: white;
     display: inline-block;
     transition: 0.25s all;
-    border-right: 5px solid #333;
+    opacity: 0.6;
 }
 
 .ext-documents .document.dragged{
@@ -52,7 +52,7 @@
 .ext-documents .document.selected{
     color: rgb(0, 184, 255);
     background: #1d1f21;
-    border-right: 5px solid white !important;
+    opacity: 1;
 }
 
 .ext-documents .document.changed{
