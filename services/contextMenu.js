@@ -2,12 +2,14 @@ var CommandMenus = require('command/Menus'),
     CommandManager = require('command/CommandManager');
 
 define(function(require, exports, module){
-    var instance = new ContextMenuService();
+    var instance = new ContextMenuService(),
+        _ = require('../vendor/lodash'),
+        storage = require('./storage'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
+        storageRulesKey = 'rules';
 
     function ContextMenuService(){
-        var openOptionsCommand,
-            addNewRuleCommand,
-            ModalService = require('./modal'),
+        var ModalService = require('./modal'),
             self = this,
             contextMenuId = 'document-context_menu';
 
@@ -15,21 +17,41 @@ define(function(require, exports, module){
 
         this.menu = CommandMenus.registerContextMenu(contextMenuId);
 
-        openOptionsCommand = CommandManager.register('Open options', 'dte_options', function(){
-            console.log('+');
+        this.clearRuleCommand = CommandManager.register('Clear custom colors', 'dte_clearRule', function(){
+            var colorRules = storage.getKey(storageRulesKey) || {};
+
+            _.remove(colorRules, function(rule){
+                return self.context._name.indexOf(rule.name) >= 0;
+            });
+
+            storage.setKey(storageRulesKey, colorRules);
+            $(DocumentManager).trigger('workingSetSort');
         });
 
-        addNewRuleCommand = CommandManager.register('Change tab color', 'dte_addRule', function(){
+        this.addNewRuleCommand = CommandManager.register('!', 'dte_addRule', function(){
             var viewModel = ModalService.showHandler();
             viewModel.getOrCreateRule(self.context._name);
         });
 
-        this.menu.addMenuItem(addNewRuleCommand);
-        this.menu.addMenuItem(openOptionsCommand);
+        this.menu.addMenuItem(this.addNewRuleCommand);
+        this.menu.addMenuItem(this.clearRuleCommand);
 
     }
 
     ContextMenuService.prototype.open = function(context, event){
+        this.menu.removeMenuItem(this.clearRuleCommand);
+
+        var colorRules = storage.getKey(storageRulesKey) || {};
+
+        if (_.find(colorRules, function(rule){
+            return context._name.indexOf(rule.name) >= 0;
+        })){
+            this.menu.addMenuItem(this.clearRuleCommand);
+            this.addNewRuleCommand.setName('Change tab colors');
+        } else {
+            this.addNewRuleCommand.setName('Set tab colors');
+        }
+
         this.context = context;
         this.menu.open(event);
     }
