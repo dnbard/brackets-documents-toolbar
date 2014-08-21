@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     require('./services/injector').init();
     require('./services/preferences').init();
     require('./services/storage').init();
+    require('./services/tabSize');
 
     require('./services/onlineTracking').init();
 });

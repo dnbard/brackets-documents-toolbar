@@ -1,6 +1,6 @@
 .ext-documents .documents-holder{
     padding-top: 7px;
-    width: 1000%;
+    white-space: nowrap;
 }
 
 .ext-documents .document{
@@ -70,6 +70,8 @@
 
 .ext-documents .document-name{
     padding-right: 4px;
+    display: inline-block;
+    overflow-x: hidden;
 }
 
 .ext-documents .document:before{
@@ -252,4 +254,8 @@
     height: 27px;
     text-align: center;
     padding-top: 7px;
+}
+
+.document-icon.fa{
+    font-size: 18px;
 }
