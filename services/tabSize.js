@@ -8,11 +8,19 @@ define(function(require, exports, module){
     function TabSizeService(){
         var self = this;
 
+        this.lastResize = new Date(1,1,1);
         this.tabResizeWorker = function(){
             var docs = $('.document-holder .document-name'),
                 documentsNameWidth = 0,
-                ratio = ($('.documents-holder').width() - $('.document').first().width() - 40) / $('.document-holder').width(),
-                docHolderWidth = $('.document-holder').width();
+                ratio = ($('.documents-holder').width() - $('.document:first').width() - 20) / $('.document-holder').width(),
+                docHolderWidth = $('.document-holder').width(),
+                now = new Date();
+
+            //do not fire this handler for multiple times at startup
+            if (now - self.lastResize < 100){
+                return;
+            }
+            self.lastResize = now;
 
             _.each(docs, function(doc){
                 documentsNameWidth += $(doc).width();

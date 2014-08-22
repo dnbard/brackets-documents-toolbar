@@ -72,6 +72,7 @@
     padding-right: 4px;
     display: inline-block;
     overflow-x: hidden;
+    text-align: center;
 }
 
 .ext-documents .document:before{
