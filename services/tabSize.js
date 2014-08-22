@@ -10,22 +10,20 @@ define(function(require, exports, module){
 
         this.tabResizeWorker = function(){
             var docs = $('.document-holder .document-name'),
-                ratio = ($('div.documents-holder').width() - $('.document').first().width() - 20) / $('span.document-holder').width(),
-                previousRatio = 1;
+                documentsNameWidth = 0,
+                ratio = ($('.documents-holder').width() - $('.document').first().width() - 40) / $('.document-holder').width(),
+                docHolderWidth = $('.document-holder').width();
 
-            while(ratio < 0.99 && Math.abs(ratio - previousRatio) > 0.005){
-                console.log(ratio);
+            _.each(docs, function(doc){
+                documentsNameWidth += $(doc).width();
+            });
 
-                _.each(docs, function(doc){
-                    var $doc = $(doc),
-                        width = $doc.width();
+            _.each(docs, function(doc){
+                var $doc = $(doc),
+                    width = $doc.width();
 
-                    $doc.width(width * ratio - 5);
-                });
-
-                previousRatio = ratio;
-                ratio = ($('div.documents-holder').width() - $('.document').first().width() - 20) / $('span.document-holder').width();
-            }
+                $doc.width(width * (1 - (1 - ratio) / documentsNameWidth * docHolderWidth));
+            });
         }
 
         this.sizeHandler = function(){
