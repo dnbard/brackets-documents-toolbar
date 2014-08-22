@@ -2,6 +2,7 @@ define(function(require, exports){
     var container = {
         as: {icon: 'icon-prog-actionscript', color: '#C01424' },
         js: { icon: 'icon-prog-js02', color: '#F1DA4E' },
+        ts: { icon: 'icon-twitter-2', color: '#3767A1' },
         ejs: { icon: 'icon-prog-js02', color: '#f4bf75' },
         coffee: { icon: 'icon-prog-coffeescr', color: '#c9905e' },
         css: { icon: 'icon-css3-02', color: '#34B0D4' },
