@@ -51,9 +51,24 @@ define(function(require, exports, module){
         }
 
         this.onDocumentClose = function(file, event){
+            var currentDocument = DocumentManager.getCurrentDocument(),
+                activeDocumentPath;
+
             DocumentManager.removeFromWorkingSet(file, false);
             self.removeDocument(file);
             self.tooltip(null);
+
+            if (currentDocument && currentDocument.file._path === file._path){
+                if (self.documents().length > 0){
+                    activeDocumentPath = self.documents()[0]._path;
+                    DocumentManager.getDocumentForPath(activeDocumentPath)
+                        .done(function(doc){
+                            DocumentManager.setCurrentDocument(doc);
+                        });
+                } else {
+                    DocumentManager.closeAll()
+                }
+            }
         }
 
         this.onDocumentAdd = function(){
