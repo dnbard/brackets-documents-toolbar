@@ -61,7 +61,8 @@ define(function(require, exports, module){
         $DocumentManager.on('pathDeleted', this.sizeHandler);
         $DocumentManager.on('workingSetSort', this.sizeHandler);
 
-        $(window).on('resize', this.sizeHandlerSync);
+        $(window).on('resize', this.sizeHandler);
+        $(document).ready(this.sizeHandler);
     }
 
     module.exports = instance;
