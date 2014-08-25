@@ -3,10 +3,7 @@ Brackets Document Toolbar
 
 Extension that adds new toolbar with a list of all open documents.
 
-![example](http://content.screencast.com/users/dnbard/folders/Jing/media/dc98f705-dce7-40bf-ae23-df54cee99819/2014-08-14_1456.png)
-![gif-example](https://github.com/dnbard/brackets-documents-toolbar/blob/master/shots/capture0.gif)
-
-Works greatly with [sidebar plus](https://github.com/sathyamoorthi/brackets-sidebar-plus) extension.
+![gif-example](https://github.com/dnbard/brackets-documents-toolbar/blob/master/shots/capture1.gif)
 
 Preferences
 -----------
