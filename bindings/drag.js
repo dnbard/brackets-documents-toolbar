@@ -34,9 +34,18 @@ define(function(require, exports){
                         })),
                         whereIndex = _.indexOf(workingSet, _.find(workingSet, function(el){
                             return el._path === where;
-                        }));
+                        })),
+                        diff = whereIndex - whoIndex,
+                        direction = diff / Math.abs(diff);
 
-                    DocumentManager.swapWorkingSetIndexes(whoIndex, whereIndex);
+                    if (Math.abs(diff) <= 1){
+                        DocumentManager.swapWorkingSetIndexes(whoIndex, whereIndex);
+                    } else {
+                        while(whoIndex !== whereIndex){
+                            DocumentManager.swapWorkingSetIndexes(whoIndex, whereIndex);
+                            whereIndex -= direction;
+                        }
+                    }
 
                     dragWho = null;
                     dragWhere = null;
