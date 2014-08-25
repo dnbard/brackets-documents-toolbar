@@ -6,7 +6,7 @@ define(function(require, exports, module){
     exports.init = function(){
         //https://github.com/dnbard/brackets-documents-toolbar/issues/2
         if (currentPlatform === linux){
-            ExtensionUtils(module, '../styles/linux.css');
+            ExtensionUtils.loadStyleSheet(module, '../styles/linux.css');
         }
     }
 });
