@@ -254,6 +254,10 @@ define(function(require, exports, module){
             return 'inherited';
         }
 
+        this.isCloseOnLeft = function(){
+            return prefs.get('close_left');
+        }
+
         $DocumentManager.on('workingSetAdd', function(event, file){
             self.addDocument(file);
         });

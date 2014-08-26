@@ -5,7 +5,8 @@ define(function(require, exports){
         _ = require('../vendor/lodash'),
         inits = {
             icons: true,
-            tooltip: false
+            tooltip: false,
+            close_left: false
         };
 
     exports.init = function(){
