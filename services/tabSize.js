@@ -26,6 +26,11 @@ define(function(require, exports, module){
                 documentsNameWidth += $(doc).width();
             });
 
+            //do not enlarge tabs
+            if (ratio >= 1){
+                return;
+            }
+
             _.each(docs, function(doc){
                 var $doc = $(doc),
                     width = $doc.width();
