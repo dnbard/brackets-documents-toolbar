@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     require('./bindings/drag');
     require('./bindings/editableText');
     require('./bindings/colorpicker');
+    require('./bindings/mouseIndicator');
 
     require('./services/injector').init();
     require('./services/preferences').init();

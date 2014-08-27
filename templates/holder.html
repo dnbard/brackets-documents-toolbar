@@ -1,4 +1,4 @@
-<div class="ext-documents">
+<div id="ext-documents" class="ext-documents" data-bind="mouseIndicator: true">
     <div class="documents-holder">
         <span class="document">
             <i class="fa fa-folder-open-o button-icon" data-bind="click: onDocumentAdd" title="Open file"></i>
@@ -7,8 +7,8 @@
         </span>
         <span class="document-holder" data-bind="foreach: documents">
             <span class="document" data-bind="style:{background: $parent.getDocumentBackground($data)}, css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu, mousedown: $parent.onDocumentMouseDown}, attr:{title: $data._path}, drag: true">
-                <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}, visible: $parent.iconsEnabled"></span>
                 <span class="document-close" data-bind="click: $parent.onDocumentClose, style:{color: $parent.getDocumentNameColor($data)}, visible: $parent.isCloseOnLeft()">
+                <span class="document-icon" data-bind="css: $parent.getDocumentIcon($data), style:{color: $parent.getDocumentIconColor($data)}, visible: $parent.iconsEnabled"></span>
                     <i class="fa fa-times-circle"></i>
                 </span>
                 <span class="document-name" data-bind="html: $parent.getDocumentName($data), style:{color: $parent.getDocumentNameColor($data)}"></span>

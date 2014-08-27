@@ -1,25 +1,30 @@
-var DocumentManager = require('document/DocumentManager');
+var DocumentManager = require('document/DocumentManager'),
+    AppInit = require('utils/AppInit');
 
 define(function(require, exports, module){
     var _ = require('../vendor/lodash'),
         $DocumentManager = $(DocumentManager),
-        instance = new TabSizeService();
+        instance = new TabSizeService(),
+        indicator = require('../bindings/mouseIndicator');
 
     function TabSizeService(){
         var self = this;
 
         this.lastResize = new Date(1,1,1);
-        this.tabResizeWorker = function(){
+        this.tabResizeWorker = function(supressRatioCheck){
             var docs = $('.document-holder .document-name'),
                 documentsNameWidth = 0,
                 ratio = ($('.documents-holder').width() - $('.document:first').width() - 20) / $('.document-holder').width(),
                 docHolderWidth = $('.document-holder').width(),
                 now = new Date();
 
+            supressRatioCheck = !!supressRatioCheck;
+
             //do not fire this handler for multiple times at startup
-            if (now - self.lastResize < 100){
+            if (now - self.lastResize < 10){
                 return;
             }
+
             self.lastResize = now;
 
             _.each(docs, function(doc){
@@ -27,7 +32,7 @@ define(function(require, exports, module){
             });
 
             //do not enlarge tabs
-            if (ratio >= 1){
+            if (ratio >= 1 && !supressRatioCheck){
                 return;
             }
 
@@ -39,24 +44,33 @@ define(function(require, exports, module){
             });
         }
 
-        this.sizeHandler = function(){
+        this.internalSizeHandler = function(){
             var docs = $('.document-holder .document-name');
+
+            //do not resize tabs if mouse is nearby
+            if (indicator.check('ext-documents')){
+                indicator.setHandler('ext-documents', self.tabResizeWorker);
+                return false;
+            }
+
             _.each(docs, function(doc){
                 var $doc = $(doc);
                 $doc.css('width', 'inherited');
             });
 
-            setTimeout(self.tabResizeWorker, 1);
+            return true;
+        }
+
+        this.sizeHandler = function(){
+            if (self.internalSizeHandler()){
+                setTimeout(self.tabResizeWorker, 1);
+            }
         }
 
         this.sizeHandlerSync = function(){
-            var docs = $('.document-holder .document-name');
-            _.each(docs, function(doc){
-                var $doc = $(doc);
-                $doc.css('width', 'inherited');
-            });
-
-            self.tabResizeWorker();
+            if (self.internalSizeHandler()){
+                self.tabResizeWorker();
+            }
         }
 
         $DocumentManager.on('workingSetAdd', this.sizeHandler);
@@ -66,8 +80,11 @@ define(function(require, exports, module){
         $DocumentManager.on('pathDeleted', this.sizeHandler);
         $DocumentManager.on('workingSetSort', this.sizeHandler);
 
-        $(window).on('resize', this.sizeHandler);
-        $(document).ready(this.sizeHandler);
+        $(window).on('resize', self.sizeHandler);
+
+        AppInit.appReady(function(){
+            self.sizeHandler();
+        });
     }
 
     module.exports = instance;

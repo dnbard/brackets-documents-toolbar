@@ -74,6 +74,7 @@
     overflow-x: hidden;
     text-align: center;
     max-width: 12em;
+    /*transition: all 0.25s;*/
 }
 
 .ext-documents .document:before{
