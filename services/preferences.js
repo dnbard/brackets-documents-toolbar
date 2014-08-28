@@ -8,7 +8,8 @@ define(function(require, exports){
             icons: true,
             tooltip: false,
             close_left: false,
-            workingFiles: true
+            workingFiles: true,
+            brackets_font: true
         };
 
     exports.init = function(){

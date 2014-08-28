@@ -28,6 +28,11 @@ define(function(require, exports, module){
             self.iconsEnabled(value);
         });
 
+        this.fontEnabled = ko.observable(prefs.get('brackets_font'));
+        prefs.notifier('brackets_font', function(value){
+            self.fontEnabled(value);
+        });
+
         this.onDocumentClick = function(model, event){
             DocumentManager.getDocumentForPath(model._path)
                 .done(function(doc){

@@ -1,7 +1,8 @@
 define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
         prefs = require('../services/preferences'),
-        ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
+        ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
+        fonts = require('../services/fonts');
 
     function showWorkingFiles(value){
         if (value){
@@ -23,8 +24,15 @@ define(function(require, exports, module){
             prefs.set('icons', value);
         });
 
+        this.useBracketsFont = ko.observable();
+        this.useBracketsFont.subscribe(function(value){
+            fonts.change(value);
+            prefs.set('brackets_font', value);
+        });
+
         this.showWorkingFiles(prefs.get('workingFiles'));
         this.showIcons(prefs.get('icons'));
+        this.useBracketsFont(prefs.get('brackets_font'));
     }
 
     module.exports = GeneralOptions;

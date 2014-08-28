@@ -16,6 +16,10 @@
                 <input type="checkbox" data-bind="checked: showIcons" />
                 <span>Show Icons</span>
             </div>
+            <div>
+                <input type="checkbox" data-bind="checked: useBracketsFont" />
+                <span>Use Brackets font settings</span>
+            </div>
         </div>
         <div data-page="RULES" data-bind="visible: isCurrentPageSelected($data, $element)">
             <div class="rule-set" data-bind="foreach: rules">
