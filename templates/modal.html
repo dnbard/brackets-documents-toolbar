@@ -3,40 +3,56 @@
         <h1 class="dialog-title">Documents toolbar settings</h1>
     </div>
     <div class="modal-body">
-        <div class="rule-set" data-bind="foreach: rules">
-            <div class="dt-rule" data-bind="click: $parent.onSelectRule, css:{selected: $data === $parent.selectedRule()}">
-                <div class="dt-rule_background" data-bind="style:{background: background}"></div>
-                <div class="dt-rule_foreground" data-bind="style:{background: color}"></div>
-                <div class="dt-rule_name" data-bind="text: $parent.getCaption($data)"></div>
+        <div class="options-pages">
+            <span class="options-page" data-page="GENERAL" data-bind="css: {selected: isCurrentPageSelected($data, $element)}, click: setPage">General</span>
+            <span class="options-page" data-page="RULES" data-bind="css: {selected: isCurrentPageSelected($data, $element)}, click: setPage">Rules</span>
+        </div>
+        <div data-page="GENERAL" data-bind="visible: isCurrentPageSelected($data, $element), with: generalOptions">
+            <div>
+                <input type="checkbox" data-bind="checked: showWorkingFiles" />
+                <span>Show Working Files panel</span>
+            </div>
+            <div>
+                <input type="checkbox" data-bind="checked: showIcons" />
+                <span>Show Icons</span>
             </div>
         </div>
-        <div class="rule-options" data-bind="with: selectedRule">
-            <div class="_row">
-                <span>Apply to</span>
-                <input data-bind="value: name"/>
-                <div class="muted">You can apply rules to set of files. Example: *.css</div>
-            </div>
-            <div class="_row">
-                <input type="checkbox" data-bind="checked: forThisProjectOnly"/>
-                <span>Use this rule only for specific project</span>
-                <div data-bind="visible: project() !== null">
-                    <span>Project</span>
-                    <input data-bind="value: project" />
+        <div data-page="RULES" data-bind="visible: isCurrentPageSelected($data, $element)">
+            <div class="rule-set" data-bind="foreach: rules">
+                <div class="dt-rule" data-bind="click: $parent.onSelectRule, css:{selected: $data === $parent.selectedRule()}">
+                    <div class="dt-rule_background" data-bind="style:{background: background}"></div>
+                    <div class="dt-rule_foreground" data-bind="style:{background: color}"></div>
+                    <div class="dt-rule_name" data-bind="text: $parent.getCaption($data)"></div>
                 </div>
             </div>
-            <div class="_row">
-                <span>Background:</span>
-                <div class="colorpicker" data-bind="colorpicker: background"></div>
-                <span>Color:</span>
-                <div class="colorpicker" data-bind="colorpicker: color"></div>
+            <div class="rule-options" data-bind="with: selectedRule">
+                <div class="_row">
+                    <span>Apply to</span>
+                    <input data-bind="value: name"/>
+                    <div class="muted">You can apply rules to set of files. Example: *.css</div>
+                </div>
+                <div class="_row">
+                    <input type="checkbox" data-bind="checked: forThisProjectOnly"/>
+                    <span>Use this rule only for specific project</span>
+                    <div data-bind="visible: project() !== null">
+                        <span>Project</span>
+                        <input data-bind="value: project" />
+                    </div>
+                </div>
+                <div class="_row">
+                    <span>Background:</span>
+                    <div class="colorpicker" data-bind="colorpicker: background"></div>
+                    <span>Color:</span>
+                    <div class="colorpicker" data-bind="colorpicker: color"></div>
+                </div>
+                <div class="_row tab-preview" data-bind="style:{color: color, background: background}">
+                    <p>Preview</p>
+                </div>
             </div>
-            <div class="_row tab-preview" data-bind="style:{color: color, background: background}">
-                <p>Preview</p>
+            <div class="buttons-set">
+                <button class="btn" data-bind="click: addNewRule">Add rule</button>
+                <button class="btn" data-bind="click: removeRule, enable: selectedRule">Remove</button>
             </div>
-        </div>
-        <div class="buttons-set">
-            <button class="btn" data-bind="click: addNewRule">Add rule</button>
-            <button class="btn" data-bind="click: removeRule, enable: selectedRule">Remove</button>
         </div>
     </div>
     <div class="modal-footer">

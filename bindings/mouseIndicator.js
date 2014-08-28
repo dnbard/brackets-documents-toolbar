@@ -21,7 +21,7 @@ define(function(require, exports, module){
                 if (handlers[id]){
                     setTimeout(function(){
                         var tabResizer = require('../services/tabSize');
-                        tabResizer.tabResizeWorker(true);
+                        tabResizer.tabResizeWorker(false);
                         handlers[id] = null;
                     }, 250);
                 }

@@ -139,6 +139,11 @@
     border-bottom: 15px solid lightgray;
 }
 
+.documents-toolbar_modal .modal-body{
+    max-height: 900px;
+    min-height: 440px;
+}
+
 .documents-toolbar_modal .rule-set{
     width: 200px;
     height: 350px;
@@ -176,14 +181,38 @@
 
 .documents-toolbar_modal .rule-options{
     display: inline-block;
-    width: 350px;
+    width: 345px;
     height: 350px;
     vertical-align: top;
     padding: 2px 5px;
+    overflow: hidden;
 }
 
 .documents-toolbar_modal .rule-options ._row{
     margin-bottom: 5px;
+}
+
+.documents-toolbar_modal .options-pages{
+    margin-bottom: 4px;
+    margin-top: -4px;
+}
+
+.documents-toolbar_modal .options-page{
+    display: inline-block;
+    margin: 2px 5px;
+    cursor: pointer;
+    background: white;
+    transition: 0.25s all;
+    padding: 2px 4px;
+}
+
+.documents-toolbar_modal .options-page:hover{
+    box-shadow: 0 -4px 0px rgb(255, 100, 255) inset;
+}
+
+.documents-toolbar_modal .options-page.selected{
+    background: rgb(0, 184, 255);
+    color: black;
 }
 
 .colorpicker{

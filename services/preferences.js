@@ -3,10 +3,12 @@ var PreferencesManager = require('preferences/PreferencesManager');
 define(function(require, exports){
     var prefs = PreferencesManager.getExtensionPrefs('dnbard.documents-toolbar'),
         _ = require('../vendor/lodash'),
+        events = {},
         inits = {
             icons: true,
             tooltip: false,
-            close_left: false
+            close_left: false,
+            workingFiles: true
         };
 
     exports.init = function(){
@@ -19,5 +21,19 @@ define(function(require, exports){
 
     exports.get = function(id){
         return prefs.get(id);
+    }
+
+    exports.set = function(id, value){
+        if (typeof id === 'string' && value !== undefined){
+            prefs.set(id, value);
+        }
+
+        if (typeof events[id] === 'function'){
+            events[id](value);
+        }
+    }
+
+    exports.notifier = function(id, handler){
+        events[id] = handler;
     }
 });

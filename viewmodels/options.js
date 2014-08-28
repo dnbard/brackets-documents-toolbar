@@ -7,14 +7,15 @@ define(function(require, exports, module){
         defaultBackground = '#333333',
         defaultColor = '#FFFFFF',
         storage = require('../services/storage'),
-        storageRulesKey = 'rules';
+        storageRulesKey = 'rules',
+        GeneralOptions = require('./generalOptions');
 
     function Rule(data){
         data = data || {};
 
         this.name = ko.observable(data.name || 'Change name');
 
-        this.project = ko.observable(data.project || null)
+        this.project = ko.observable(data.project || null);
 
         this.forThisProjectOnly = ko.observable(data.forThisProjectOnly || false);
         this.forThisProjectOnly.subscribe(_.bind(function(value){
@@ -32,8 +33,20 @@ define(function(require, exports, module){
     function OptionsViewModel(){
         var self = this;
 
+        this.generalOptions = new GeneralOptions();
+
         this.rules = ko.observableArray([]);
         this.selectedRule = ko.observable(null);
+
+        this.selectedRule.subscribe(function(value){
+            if (value === null){
+                return;
+            }
+
+            self.currentPage('RULES');
+        });
+
+        this.currentPage = ko.observable('GENERAL');
 
         _.each(storage.getKey(storageRulesKey) || {}, function(rule){
             self.rules.push(new Rule(rule));
@@ -75,6 +88,26 @@ define(function(require, exports, module){
 
             this.selectedRule(rule);
             return rule;
+        }
+
+        this.setPage = function(model, event){
+            var page = $(event.target).attr('data-page');
+
+            if (!page){
+                throw new Error('Page cannot be empty');
+            }
+
+            this.currentPage(page.toUpperCase());
+        }
+
+        this.isCurrentPageSelected = function(model, element){
+            var page = $(element).attr('data-page');
+
+            if (!page){
+                throw new Error('Page cannot be empty');
+            }
+
+            return this.currentPage() === page;
         }
     }
 

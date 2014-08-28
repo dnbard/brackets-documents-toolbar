@@ -24,6 +24,9 @@ define(function(require, exports, module){
         this.changed = ko.observableArray([]);
 
         this.iconsEnabled = ko.observable(prefs.get('icons'));
+        prefs.notifier('icons', function(value){
+            self.iconsEnabled(value);
+        });
 
         this.onDocumentClick = function(model, event){
             DocumentManager.getDocumentForPath(model._path)

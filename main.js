@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
-    var ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
+    var ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
+        GeneralOptions = require('./viewmodels/generalOptions');
 
     ExtensionUtils.loadStyleSheet(module, 'styles/main.css');
     ExtensionUtils.loadStyleSheet(module, 'styles/awesome.css');
@@ -19,4 +20,6 @@ define(function (require, exports, module) {
     require('./services/tabSize');
 
     require('./services/onlineTracking').init();
+
+    new GeneralOptions();
 });
