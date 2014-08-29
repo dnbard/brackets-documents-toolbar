@@ -18,10 +18,7 @@ define(function(require, exports, module){
             .css('font-family', prefs.get("fontFamily"));
     }
 
-    exports.init = function(){
-        console.log(prefs.get("fontSize"));
-        console.log(prefs.get("fontFamily"));
-    }
+    exports.init = function(){ }
 
     exports.change = function(value){
         isChange = value;
