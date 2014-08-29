@@ -36,6 +36,11 @@ define(function(require, exports, module){
                 return;
             }
 
+            //do not enlarge tabs
+            if (ratio > 1){
+                ratio = 1;
+            }
+
             _.each(docs, function(doc){
                 var $doc = $(doc),
                     width = $doc.width();
@@ -61,9 +66,11 @@ define(function(require, exports, module){
             return true;
         }
 
-        this.sizeHandler = function(){
+        this.sizeHandler = function(suppress){
             if (self.internalSizeHandler()){
-                setTimeout(self.tabResizeWorker, 1);
+                setTimeout(function(){
+                    self.tabResizeWorker(suppress);
+                }, 1);
             }
         }
 
