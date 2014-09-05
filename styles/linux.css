@@ -1,27 +1,3 @@
 #titlebar{
-    background: #3C3F41;
-    box-shadow: none;
-    position: absolute;
-    top: 0;
     width: 1000%;
-    border: 0;
-}
-
-#titlebar, #titlebar .dropdown-toggle{
-    color: #FFFFFF;
-}
-
-#titlebar .dropdown-toggle:hover, #titlebar .dropdown.open .dropdown-toggle{
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid transparent;
-    border-bottom: 0px;
-}
-
-#main-toolbar{
-    padding-top: 65px;
-}
-
-.ext-documents{
-    height: 35px;
-    padding-top: 30px;
 }
