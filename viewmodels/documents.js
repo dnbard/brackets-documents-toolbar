@@ -45,6 +45,8 @@ define(function(require, exports, module){
 
         this.showContextMenu = ko.observable(false);
         this.onDocumentContextMenu = function(context, event){
+            self.onDocumentClick(context, event);
+
             contextMenu.open(context, event);
         }
 
