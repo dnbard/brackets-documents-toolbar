@@ -9,7 +9,8 @@ define(function(require, exports){
             tooltip: false,
             close_left: false,
             workingFiles: true,
-            brackets_font: true
+            brackets_font: true,
+            grayscaleIcons: false
         };
 
     exports.init = function(){
