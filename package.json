@@ -3,8 +3,8 @@
     "title": "Documents Toolbar",
     "description": "Adds toolbar with tabs of open documents on the top of the editor. Now with drag and drop!",
     "homepage": "https://github.com/dnbard/brackets-documents-toolbar",
-    "version": "0.4.4",
-    "author": "Alex Bardanov <dnbard@gmail.com>",
+    "version": "0.4.5",
+    "author": "Alex Bardanov",
     "license": "MIT",
     "engines": {
         "brackets": ">=0.43.0"
