@@ -1,6 +1,7 @@
 /*jshint -W033 */
 var DocumentManager = require('document/DocumentManager'),
     ProjectManager = require('project/ProjectManager'),
+    CommandManager = require('command/CommandManager'),
     fs = require("fileSystemImpl");
 
 define(function(require, exports, module){
@@ -60,25 +61,8 @@ define(function(require, exports, module){
             return true;
         }
 
-        this.onDocumentClose = function(file, event){
-            var currentDocument = DocumentManager.getCurrentDocument(),
-                activeDocumentPath;
-
-            DocumentManager.removeFromWorkingSet(file, false);
-            self.removeDocument(file);
-            self.tooltip(null);
-
-            if (currentDocument && currentDocument.file._path === file._path){
-                if (self.documents().length > 0){
-                    activeDocumentPath = self.documents()[0]._path;
-                    DocumentManager.getDocumentForPath(activeDocumentPath)
-                        .done(function(doc){
-                            DocumentManager.setCurrentDocument(doc);
-                        });
-                } else {
-                    DocumentManager.closeAll()
-                }
-            }
+        this.onDocumentClose = function(){
+            CommandManager.execute('file.close');
         }
 
         this.onDocumentAdd = function(){
