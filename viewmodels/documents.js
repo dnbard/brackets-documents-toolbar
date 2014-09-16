@@ -61,8 +61,11 @@ define(function(require, exports, module){
             return true;
         }
 
-        this.onDocumentClose = function(){
-            CommandManager.execute('file.close');
+        this.onDocumentClose = function(context, event){
+            self.onDocumentClick(context, event);
+            setTimeout(function(){
+                CommandManager.execute('file.close');
+            }, 1);
         }
 
         this.onDocumentAdd = function(){
