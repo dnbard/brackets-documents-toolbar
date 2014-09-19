@@ -302,6 +302,34 @@ define(function(require, exports, module){
         $DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
 
         $DocumentManager.on('documentSaved', this.isDocumentChanged);
+
+        // look for brackets-git and attach handlers for its events
+        if (typeof window === 'object') {
+            var attachHookOnBracketsGit = function() {
+                var bGit = window.bracketsGit;
+                bGit.EventEmitter.on(bGit.Events.GIT_STATUS_RESULTS, function (results) {
+                    console.log('we got results ;-)');
+                    console.log(results);
+                });
+            };
+
+            var attempts = 0,
+                maxAttempts = 10;
+
+            var lookForBracketsGit = function() {
+                attempts++;
+                if (window.bracketsGit) {
+                    console.log('found bracketsGit! (' + attempts + ')');
+                    attachHookOnBracketsGit();
+                } else {
+                    console.log('no luck, will try again in a second (' + attempts + ')');
+                    if (attempts < maxAttempts) {
+                        window.setTimeout(lookForBracketsGit, 1000);
+                    }
+                }
+            }
+            lookForBracketsGit();
+        }
     }
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
