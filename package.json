@@ -7,7 +7,7 @@
     "author": "Alex Bardanov",
     "license": "MIT",
     "engines": {
-        "brackets": ">=0.43.0"
+        "brackets": ">=0.44.0"
     },
     "keywords": ["documents", "toolbar"]
 }
