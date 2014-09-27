@@ -1,4 +1,5 @@
-var DocumentManager = require('document/DocumentManager');
+var DocumentManager = require('document/DocumentManager'),
+    MainViewManager = require('view/MainViewManager');
 
 define(function(require, exports){
     var ko = require('../vendor/knockout'),
@@ -28,7 +29,7 @@ define(function(require, exports){
                 if (dragWho && dragWhere){
                     var who = dragWho.attr('title'),
                         where = dragWhere.attr('title'),
-                        workingSet = DocumentManager.getWorkingSet(),
+                        workingSet = MainViewManager.getWorkingSet(),
                         whoIndex = _.indexOf(workingSet, _.find(workingSet, function(el){
                             return el._path === who;
                         })),
@@ -39,10 +40,12 @@ define(function(require, exports){
                         direction = diff / Math.abs(diff);
 
                     if (Math.abs(diff) <= 1){
-                        DocumentManager.swapWorkingSetIndexes(whoIndex, whereIndex);
+                        //No drag-n-drop until Brackets API is freezed
+                        //MainViewManager._getPaneIdForPath
+                        //MainViewManager._swapWorkingSetListIndexes(whoIndex, whereIndex);
                     } else {
                         while(whoIndex !== whereIndex){
-                            DocumentManager.swapWorkingSetIndexes(whoIndex, whereIndex);
+                            //MainViewManager._swapWorkingSetListIndexes(whoIndex, whereIndex);
                             whereIndex -= direction;
                         }
                     }
