@@ -1,5 +1,5 @@
 .ext-documents .documents-holder{
-    padding-top: 7px;
+    padding-top: 2px;
     white-space: nowrap;
 }
 
@@ -89,8 +89,12 @@
     left: 0;
     border-width: 10px 10px 0px 0px;
     border-style: solid;
-    border-color: rgb(60, 63, 65) transparent transparent rgb(60, 63, 65);
+    border-color: white transparent transparent white;
     z-index: 10;
+}
+
+.dark .ext-documents .document:before{
+    border-color: black transparent transparent black;
 }
 
 .ext-documents .document-close{
