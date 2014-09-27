@@ -1,5 +1,6 @@
 /*jshint -W033 */
 var DocumentManager = require('document/DocumentManager'),
+    MainViewManager = require('view/MainViewManager'),
     ProjectManager = require('project/ProjectManager'),
     CommandManager = require('command/CommandManager'),
     fs = require("fileSystemImpl");
@@ -9,7 +10,7 @@ define(function(require, exports, module){
         _ = require('../vendor/lodash'),
         Icons = require('../services/icons'),
         config = require('../config'),
-        $DocumentManager = $(DocumentManager),
+        $MainViewManager = $(MainViewManager),
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
         storage = require('../services/storage'),
@@ -255,38 +256,38 @@ define(function(require, exports, module){
             return prefs.get('close_left');
         }
 
-        $DocumentManager.on('workingSetAdd', function(event, file){
+        $MainViewManager.on('workingSetAdd', function(event, file){
             self.addDocument(file);
         });
 
-        $DocumentManager.on('workingSetRemove', function(event, file){
+        $MainViewManager.on('workingSetRemove', function(event, file){
             self.removeDocument(file)
         });
 
-        $DocumentManager.on('currentDocumentChange', function(event, newDocument){
+        $MainViewManager.on('currentDocumentChange', function(event, newDocument){
             if (!newDocument){
                 return;
             }
             self.selected(newDocument.file);
         });
 
-        $DocumentManager.on('workingSetAddList', function(event, files){
+        $MainViewManager.on('workingSetAddList', function(event, files){
             _.each(files, function(file){
                 self.addDocument(file);
             });
         });
 
-        $DocumentManager.on('workingSetRemoveList', function(event, files){
+        $MainViewManager.on('workingSetRemoveList', function(event, files){
             _.each(files, function(file){
                 self.removeDocument(file);
             });
         });
 
-        $DocumentManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
+        $MainViewManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
 
-        $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
+        $MainViewManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
 
-        $DocumentManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
+        $MainViewManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
 
         this.isDocumentChanged = function(event, document){
             if (document.isDirty){
@@ -299,9 +300,9 @@ define(function(require, exports, module){
             }
         }
 
-        $DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
+        $MainViewManager.on('dirtyFlagChange', this.isDocumentChanged);
 
-        $DocumentManager.on('documentSaved', this.isDocumentChanged);
+        $MainViewManager.on('documentSaved', this.isDocumentChanged);
 
         // look for brackets-git and attach handlers for its events
         if (typeof window === 'object') {
