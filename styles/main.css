@@ -97,6 +97,17 @@
     border-color: black transparent transparent black;
 }
 
+.ext-documents .document.modified:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 4px;
+    height: 100%;
+    background: orange;
+}
+
 .ext-documents .document-close{
     color: white;
     transition: 0.25s all;

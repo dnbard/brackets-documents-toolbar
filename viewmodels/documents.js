@@ -24,6 +24,7 @@ define(function(require, exports, module){
             return this.selected() ? this.selected()._path : '';
         }, this);
         this.changed = ko.observableArray([]);
+        this.modified = ko.observableArray([]);
 
         this.iconsEnabled = ko.observable(prefs.get('icons'));
         prefs.notifier('icons', function(value){
@@ -110,6 +111,12 @@ define(function(require, exports, module){
 
         this.isChanged = function(doc){
             return _.contains(self.changed(), doc._path);
+        }
+
+        this.isModified = function(doc){
+            return !!_.find(self.modified(), function(modified){
+                return modified.name === doc._name && doc._path.indexOf(modified.file) >= 0;
+            });
         }
 
         this.addDocument = function(doc){
@@ -309,8 +316,7 @@ define(function(require, exports, module){
             var attachHookOnBracketsGit = function() {
                 var bGit = window.bracketsGit;
                 bGit.EventEmitter.on(bGit.Events.GIT_STATUS_RESULTS, function (results) {
-                    console.log('we got results ;-)');
-                    console.log(results);
+                    self.modified(results);
                 });
             };
 
@@ -320,12 +326,12 @@ define(function(require, exports, module){
             var lookForBracketsGit = function() {
                 attempts++;
                 if (window.bracketsGit) {
-                    console.log('found bracketsGit! (' + attempts + ')');
                     attachHookOnBracketsGit();
                 } else {
-                    console.log('no luck, will try again in a second (' + attempts + ')');
                     if (attempts < maxAttempts) {
                         window.setTimeout(lookForBracketsGit, 1000);
+                    } else {
+                        console.log('Download the Brackets Git for a better development experience: https://github.com/zaggino/brackets-git');
                     }
                 }
             }
