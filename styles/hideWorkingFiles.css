@@ -1,7 +1,3 @@
-#working-set-header{
-    display: none !important;
-}
-
-#open-files-container{
+#working-set-list-container{
     display: none !important;
 }
