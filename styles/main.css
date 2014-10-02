@@ -93,8 +93,12 @@
     z-index: 10;
 }
 
+.dark .ext-documents{
+    background: #47484b;
+}
+
 .dark .ext-documents .document:before{
-    border-color: black transparent transparent black;
+    border-color: #47484b transparent transparent #47484b;
 }
 
 .ext-documents .document.modified:after{
