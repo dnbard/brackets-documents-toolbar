@@ -3,6 +3,7 @@ var DocumentManager = require('document/DocumentManager'),
     MainViewManager = require('view/MainViewManager'),
     ProjectManager = require('project/ProjectManager'),
     CommandManager = require('command/CommandManager'),
+    EditorManager = require('editor/EditorManager'),
     fs = require("fileSystemImpl");
 
 define(function(require, exports, module){
@@ -12,6 +13,7 @@ define(function(require, exports, module){
         config = require('../config'),
         $MainViewManager = $(MainViewManager),
         $DocumentManager = $(DocumentManager),
+        $EditorManager = $(EditorManager),
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
         storage = require('../services/storage'),
@@ -272,7 +274,13 @@ define(function(require, exports, module){
             self.removeDocument(file)
         });
 
-        $MainViewManager.on('currentDocumentChange', function(event, newDocument){
+        $EditorManager.on('activeEditorChange', function(event, focusedEditor){
+            if (!focusedEditor){
+                return;
+            }
+
+            var newDocument = focusedEditor.document;
+
             if (!newDocument){
                 return;
             }
