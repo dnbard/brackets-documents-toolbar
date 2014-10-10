@@ -11,6 +11,7 @@ define(function(require, exports, module){
         Icons = require('../services/icons'),
         config = require('../config'),
         $MainViewManager = $(MainViewManager),
+        $DocumentManager = $(DocumentManager),
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
         storage = require('../services/storage'),
@@ -307,9 +308,9 @@ define(function(require, exports, module){
             }
         }
 
-        $MainViewManager.on('dirtyFlagChange', this.isDocumentChanged);
+        $DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
 
-        $MainViewManager.on('documentSaved', this.isDocumentChanged);
+        $DocumentManager.on('documentSaved', this.isDocumentChanged);
 
         // look for brackets-git and attach handlers for its events
         if (typeof window === 'object') {
