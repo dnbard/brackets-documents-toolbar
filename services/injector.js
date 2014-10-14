@@ -15,15 +15,11 @@ define(function(require, exports){
         $(firstPanelSelector).prepend($holder);
         ko.applyBindings(new DocumentsViewModel($holder, 'first-pane'), $holder[0]);
         
-        $MainViewManager.on('paneCreate', function(e, paneId){
+        $MainViewManager.on('paneCreate', function(){
             var $holder = $(template);
             $holder.css('background', $(openFilesSelector).css('background'));
             $(secondPanelSelector).prepend($holder);
             ko.applyBindings(new DocumentsViewModel($holder, 'second-pane'), $holder[0]);
-        });
-        
-        $MainViewManager.on('paneDestroy', function(e, paneId){
-            console.log(paneId + ' destroyed');
         });
     };
 });
