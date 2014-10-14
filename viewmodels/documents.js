@@ -19,8 +19,10 @@ define(function(require, exports, module){
         storage = require('../services/storage'),
         contextMenu = require('../services/contextMenu');
     
-    function DocumentsViewModel(){
+    function DocumentsViewModel(element){
         var self = this;
+
+        this.element = element;
         this.documents = ko.observableArray([]);
         this.selected = ko.observable(null);
         this.selectedPath = ko.computed(function(){

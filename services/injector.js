@@ -2,7 +2,7 @@ define(function(require, exports){
     var $ = window.jQuery,
         ko = require('../vendor/knockout'),
         DocumentsViewModel = require('../viewmodels/documents'),
-        parentSelector = '.content',
+        parentSelector = '.content #first-pane',
         openFilesSelector = '#open-files-container',
         template = require('text!../templates/holder.html');
     
