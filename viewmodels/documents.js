@@ -318,9 +318,9 @@ define(function(require, exports, module){
             });
         });
 
-        $MainViewManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
+        $DocumentManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
 
-        $MainViewManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
+        $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
 
         $MainViewManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
 
@@ -368,7 +368,6 @@ define(function(require, exports, module){
     }
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
-        console.log('handlePathChanges');
         this.documents([]);
         this.selected(null);
 
@@ -377,7 +376,7 @@ define(function(require, exports, module){
     }
     
     DocumentsViewModel.prototype.getWorkingSet = function(){
-        return DocumentManager.getWorkingSet();
+        return MainViewManager.getWorkingSet(this.panelId);
     }
     
     DocumentsViewModel.prototype.getCurrentDocument = function(){
