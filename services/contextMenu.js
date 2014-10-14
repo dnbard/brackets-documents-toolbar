@@ -85,6 +85,8 @@ define(function(require, exports, module){
     }
 
     ContextMenuService.prototype.open = function(context, event){
+        var self = this;
+
         this.menu.removeMenuItem(this.clearRuleCommand);
         this.context = context;
 
@@ -97,7 +99,9 @@ define(function(require, exports, module){
             this.addNewRuleCommand.setName('Set tab colors');
         }
 
-        this.menu.open(event);
+        setTimeout(function(){
+            self.menu.open(event);
+        }, 10);
     }
 
     module.exports = instance;
