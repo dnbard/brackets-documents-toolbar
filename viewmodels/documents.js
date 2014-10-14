@@ -19,10 +19,11 @@ define(function(require, exports, module){
         storage = require('../services/storage'),
         contextMenu = require('../services/contextMenu');
     
-    function DocumentsViewModel(element){
+    function DocumentsViewModel(element, panelId){
         var self = this;
 
         this.element = element;
+        this.panelId = panelId;
         this.documents = ko.observableArray([]);
         this.selected = ko.observable(null);
         this.selectedPath = ko.computed(function(){
@@ -268,12 +269,25 @@ define(function(require, exports, module){
             return prefs.get('close_left');
         }
 
-        $MainViewManager.on('workingSetAdd', function(event, file){
+        $MainViewManager.on('workingSetAdd', function(event, file, index, panel){
+            if (self.panelId !== panel){
+                return;
+            }
             self.addDocument(file);
         });
 
         $MainViewManager.on('workingSetRemove', function(event, file){
-            self.removeDocument(file)
+            self.removeDocument(file);
+        });
+
+        $MainViewManager.on('workingSetMove', function(e, file, sourcePaneId, destinationPaneId){
+            if (self.panelId === sourcePaneId){
+                self.removeDocument(file);
+            }
+
+            if (self.panelId === destinationPaneId){
+                self.addDocument(file);
+            }
         });
 
         $EditorManager.on('activeEditorChange', function(event, focusedEditor){
@@ -289,7 +303,10 @@ define(function(require, exports, module){
             self.selected(newDocument.file);
         });
 
-        $MainViewManager.on('workingSetAddList', function(event, files){
+        $MainViewManager.on('workingSetAddList', function(event, files, panel){
+            if (self.panelId !== panel){
+                return;
+            }
             _.each(files, function(file){
                 self.addDocument(file);
             });
@@ -351,6 +368,7 @@ define(function(require, exports, module){
     }
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
+        console.log('handlePathChanges');
         this.documents([]);
         this.selected(null);
 
