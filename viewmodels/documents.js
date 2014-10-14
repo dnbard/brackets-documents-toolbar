@@ -69,11 +69,11 @@ define(function(require, exports, module){
             return true;
         }
 
-        this.onDocumentClose = function(context, event){
-            self.onDocumentClick(context, event);
-            setTimeout(function(){
-                CommandManager.execute('file.close');
-            }, 1);
+        this.onDocumentClose = function(file){
+            CommandManager.execute('file.close', {
+                file: file,
+                paneId: this.panelId
+            });
         }
 
         this.onDocumentAdd = function(){
