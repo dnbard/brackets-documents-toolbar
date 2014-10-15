@@ -1,11 +1,13 @@
 var DocumentManager = require('document/DocumentManager'),
     MainViewManager = require('view/MainViewManager'),
+    WorkspaceManager = require('view/WorkspaceManager'),
     AppInit = require('utils/AppInit');
 
 define(function(require, exports, module){
     var _ = require('../vendor/lodash'),
         $DocumentManager = $(DocumentManager),
         $MainViewManager = $(MainViewManager),
+        $WorkspaceManager = $(WorkspaceManager),
         instance = new TabSizeService(),
         indicator = require('../bindings/mouseIndicator');
 
@@ -89,6 +91,10 @@ define(function(require, exports, module){
         $DocumentManager.on('pathDeleted', this.sizeHandler);
         $DocumentManager.on('workingSetSort', this.sizeHandler);
         $MainViewManager.on('paneCreate', this.sizeHandler);
+        $WorkspaceManager.on('workspaceUpdateLayout', this.sizeHandler);
+        /*$WorkspaceManager.on('workspaceUpdateLayout', function(){
+            console.log('+');
+        });*/
 
         $(window).on('resize', self.sizeHandler);
 
