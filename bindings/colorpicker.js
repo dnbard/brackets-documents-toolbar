@@ -1,10 +1,11 @@
 define(function(require, exports){
-    var ko = require('../vendor/knockout');
+    var ko = require('../vendor/knockout'),
+        colorPickerTemplate = require('text!../templates/colorPicker.html');
 
     require('../vendor/jquery.tinycolorpicker');
 
     function init(el){
-        el.append('<a class="color"><div class="colorInner"></div></a><div class="track" style="display: none;"><canvas width="150" height="150"></canvas></div><ul class="dropdown"></ul><input type="hidden" class="colorInput">');
+        el.append(colorPickerTemplate);
     }
 
     ko.bindingHandlers.colorpicker = {
