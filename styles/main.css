@@ -4,9 +4,13 @@
     width: 100%;
 }
 
-/*.view-pane{
+.view-pane{
     position: relative;
-}*/
+}
+
+.horz-resizer{
+    margin-left: -4px;
+}
 
 .pane-content{
     padding-top: 30px;
