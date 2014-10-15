@@ -1,6 +1,7 @@
 var CommandMenus = require('command/Menus'),
     CommandManager = require('command/CommandManager'),
     ProjectManager = require('project/ProjectManager'),
+    MainViewManager = require('view/MainViewManager'),
     AppInit = require('utils/AppInit');
 
 define(function(require, exports, module){
@@ -13,7 +14,8 @@ define(function(require, exports, module){
     function ContextMenuService(){
         var ModalService = require('./modal'),
             self = this,
-            contextMenuId = 'document-context_menu';
+            contextMenuId = 'document-context_menu',
+            panelContentProvider = require('./panels');
 
         this.context = null;
 
@@ -51,6 +53,22 @@ define(function(require, exports, module){
             $(DocumentManager).trigger('workingSetSort');
         });
 
+        this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
+            //NOT IMPLEMENTED YET UNTIL BRACKETS PANEL API WILL BE USABLE
+            var file = self.context,
+                fromPanel = panelContentProvider.isContain(file),
+                toPanel = panelContentProvider.selectOtherPanel(fromPanel);
+
+            MainViewManager._moveView(fromPanel, toPanel, file).always(function(){
+                CommandManager.execute('file.open', {
+                    fullPath: file.fullPath,
+                    paneId: toPanel
+                }).always(function(){
+                    MainViewManager.focusActivePane();
+                });
+            });
+        });
+
         AppInit.appReady(function(){
             setTimeout(function(){
                 self.menu.addMenuItem(CommandManager.get('file.saveAs'));
@@ -77,6 +95,8 @@ define(function(require, exports, module){
                     self.menu.addMenuDivider();
                 }
 
+                //self.menu.addMenuItem(self.moveToOtherPanel);
+                //self.menu.addMenuDivider();
                 self.menu.addMenuItem(self.addNewRuleCommand);
                 self.menu.addMenuItem(self.clearRuleCommand);
             }, 100);

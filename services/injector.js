@@ -7,19 +7,33 @@ define(function(require, exports){
         openFilesSelector = '#open-files-container',
         template = require('text!../templates/holder.html'),
         MainViewManager = brackets.getModule('view/MainViewManager'),
-        $MainViewManager = $(MainViewManager);
+        $MainViewManager = $(MainViewManager),
+        panelContentProvider = require('./panels');
     
     exports.init = function(){
-        var $holder = $(template);
+        var $holder = $(template),
+            vm = new DocumentsViewModel($holder, 'first-pane');
         $holder.css('background', $(openFilesSelector).css('background'));
         $(firstPanelSelector).prepend($holder);
-        ko.applyBindings(new DocumentsViewModel($holder, 'first-pane'), $holder[0]);
+        ko.applyBindings(vm, $holder[0]);
+
+        panelContentProvider.register(vm, 'first-pane');
         
         $MainViewManager.on('paneCreate', function(){
-            var $holder = $(template);
+            var $holder = $(template),
+                vm = new DocumentsViewModel($holder, 'second-pane');
             $holder.css('background', $(openFilesSelector).css('background'));
             $(secondPanelSelector).prepend($holder);
-            ko.applyBindings(new DocumentsViewModel($holder, 'second-pane'), $holder[0]);
+            ko.applyBindings(vm, $holder[0]);
+
+            panelContentProvider.register(vm, 'second-pane');
         });
+
+        $MainViewManager.on('paneDestroy', function(){
+            var vm = panelContentProvider.remove('second-pane');
+            if (typeof vm.dispose === 'function'){
+                vm.dispose();
+            }
+        })
     };
 });
