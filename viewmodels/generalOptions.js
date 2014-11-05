@@ -20,6 +20,14 @@ define(function(require, exports, module){
         }
     }
 
+    function smallIcons(value){
+        if (value){
+            ExtensionUtils.loadStyleSheet(module, '../styles/smallIcons.css');
+        } else {
+            $('link[href*="/styles/smallIcons.css"]').remove();
+        }
+    }
+
     function GeneralOptions(){
         this.showWorkingFiles = ko.observable();
         this.showWorkingFiles.subscribe(function(value){
@@ -44,10 +52,17 @@ define(function(require, exports, module){
             prefs.set('grayscaleIcons', value);
         });
 
+        this.smallIcons = ko.observable();
+        this.smallIcons.subscribe(function(value){
+            smallIcons(value);
+            prefs.set('smallIcons', value);
+        });
+
         this.showWorkingFiles(prefs.get('workingFiles'));
         this.showIcons(prefs.get('icons'));
         this.useBracketsFont(prefs.get('brackets_font'));
         this.grayscaleIcons(prefs.get('grayscaleIcons'));
+        this.smallIcons(prefs.get('smallIcons'));
     }
 
     module.exports = GeneralOptions;

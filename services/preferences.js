@@ -6,6 +6,7 @@ define(function(require, exports){
         events = {},
         inits = {
             icons: true,
+            smallIcons: false,
             tooltip: false,
             close_left: false,
             workingFiles: true,
