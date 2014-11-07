@@ -43,13 +43,11 @@ define(function(require, exports, module){
         });
 
         this.onDocumentClick = function(model, event){
-            DocumentManager.getDocumentForPath(model._path)
-                .done(function(doc){
-                    if (doc){
-                        DocumentManager.setCurrentDocument(doc);
-                        self.selected(doc.file);
-                    }
-                });
+            CommandManager.execute('file.open', {
+                fullPath: model._path
+            }).always(function(){
+                MainViewManager.focusActivePane();
+            });
         }
 
         this.showContextMenu = ko.observable(false);
