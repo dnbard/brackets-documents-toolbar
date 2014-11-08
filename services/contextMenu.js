@@ -15,6 +15,7 @@ define(function(require, exports, module){
         var ModalService = require('./modal'),
             self = this,
             contextMenuId = 'document-context_menu',
+            FileTransfer = require('./fileTransfer'),
             panelContentProvider = require('./panels');
 
         this.context = null;
@@ -58,6 +59,7 @@ define(function(require, exports, module){
             var file = self.context,
                 fromPanel = panelContentProvider.isContain(file),
                 toPanel = panelContentProvider.selectOtherPanel(fromPanel),
+                fileTransfer = new FileTransfer(),
                 panelLocation;
 
             if (!toPanel || fromPanel === toPanel ){
@@ -70,29 +72,11 @@ define(function(require, exports, module){
                 return false;
             }
 
-            console.log(panelLocation);
-
-            MainViewManager._moveView(fromPanel, toPanel, file).always(function(){
-                CommandManager.execute('file.open', {
-                    fullPath: file.fullPath,
-                    paneId: toPanel
-                }).always(function(){
-                    var panelSelector = panelLocation.paneId === 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
-                        anotherPanelSelector = panelLocation.paneId !== 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
-                        filesSelector = '.open-files-container ul > li',
-                        filesHolderSelector = '.open-files-container ul',
-                        panel = $(panelSelector),
-                        files = panel.find(filesSelector),
-                        file = files[panelLocation.index],
-                        anotherPanelHolder = $(anotherPanelSelector).find(filesHolderSelector);
-
-                    file.remove();
-                    anotherPanelHolder.prepend(file);
-
-                    $(MainViewManager).trigger('workingSetSort', panelLocation.paneId === 'first-pane' ? 'second-pane' : 'first-pane');
-
-                    MainViewManager.focusActivePane();
-                });
+            fileTransfer.toAnotherPanel({
+                fromPanel: fromPanel,
+                toPanel: toPanel,
+                file: file,
+                fromIndex: panelLocation.index
             });
         });
 

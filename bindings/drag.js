@@ -5,6 +5,7 @@ var DocumentManager = require('document/DocumentManager'),
 define(function(require, exports){
     var ko = require('../vendor/knockout'),
         _ = require('../vendor/lodash'),
+        FileTransfer = require('../services/fileTransfer'),
         dragWho = null,
         dragWhere = null;
 
@@ -28,60 +29,45 @@ define(function(require, exports){
                 $target.removeClass('dragged');
 
                 if (dragWho && dragWhere){
-                    var whoPath = dragWho.attr('title'),
-                        wherePath = dragWhere.attr('title'),
-                        who = MainViewManager.findInAllWorkingSets(whoPath)[0],
-                        where = MainViewManager.findInAllWorkingSets(wherePath)[0],
-                        whoPanel = who.paneId,
-                        wherePanel = where.paneId,
-                        whoIndex = who.index,
-                        whereIndex = where.index,
-                        diff = whereIndex - whoIndex,
-                        direction = diff / Math.abs(diff),
-                        file;
+                    var fromPath = dragWho.attr('title'),
+                        toPath = dragWhere.attr('title'),
+                        from = MainViewManager.findInAllWorkingSets(fromPath)[0],
+                        where = MainViewManager.findInAllWorkingSets(toPath)[0],
+                        fromPanel = from.paneId,
+                        toPanel = where.paneId,
+                        fromIndex = from.index,
+                        toIndex = where.index,
+                        diff = toIndex - fromIndex,
+                        direction = diff / Math.abs(diff);
 
-                    if (whoPanel === wherePanel){
+                    if (fromPanel === toPanel){
                         if (Math.abs(diff) <= 1){
                             //No drag-n-drop until Brackets API is freezed
                             //MainViewManager._getPaneIdForPath
-                            MainViewManager._swapWorkingSetListIndexes(wherePanel, whoIndex, whereIndex);
+                            MainViewManager._swapWorkingSetListIndexes(toPanel, fromIndex, toIndex);
                         } else {
-                            while(whoIndex !== whereIndex){
-                                MainViewManager._swapWorkingSetListIndexes(wherePanel, whoIndex, whereIndex);
-                                whereIndex -= direction;
+                            while(fromIndex !== toIndex){
+                                MainViewManager._swapWorkingSetListIndexes(toPanel, fromIndex, toIndex);
+                                toIndex -= direction;
                             }
                         }
 
                         dragWho = null;
                         dragWhere = null;
                     } else {
-                        DocumentManager.getDocumentForPath(whoPath).always(function(document){
-                            var file = document.file;
+                        DocumentManager.getDocumentForPath(fromPath).always(function(document){
+                        var file = document.file,
+                            fileTransfer = new FileTransfer();
 
-                            MainViewManager._moveView(whoPanel, wherePanel, file).always(function(){
-                                CommandManager.execute('file.open', {
-                                    fullPath: file.fullPath,
-                                    paneId: wherePanel
-                                }).always(function(){
-                                    var panelSelector = whoPanel === 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
-                                        anotherPanelSelector = whoPanel !== 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
-                                        filesSelector = '.open-files-container ul > li',
-                                        filesHolderSelector = '.open-files-container ul',
-                                        panel = $(panelSelector),
-                                        files = panel.find(filesSelector),
-                                        file = files[whoIndex],
-                                        anotherPanelHolder = $(anotherPanelSelector).find(filesHolderSelector);
-
-                                    file.remove();
-                                    anotherPanelHolder.prepend(file);
-
-                                    $(MainViewManager).trigger('workingSetSort', wherePanel === 'first-pane' ? 'second-pane' : 'first-pane');
-
-                                    MainViewManager.focusActivePane();
-
+                            fileTransfer.toAnotherPanel({
+                                fromPanel: fromPanel,
+                                toPanel: toPanel,
+                                file: file,
+                                fromIndex: fromIndex,
+                                callback: function(){
                                     dragWho = null;
                                     dragWhere = null;
-                                });
+                                }
                             });
                         });
                     }
