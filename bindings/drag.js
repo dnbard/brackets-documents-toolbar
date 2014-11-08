@@ -1,5 +1,6 @@
 var DocumentManager = require('document/DocumentManager'),
-    MainViewManager = require('view/MainViewManager');
+    MainViewManager = require('view/MainViewManager'),
+    CommandManager = require('command/CommandManager');
 
 define(function(require, exports){
     var ko = require('../vendor/knockout'),
@@ -36,7 +37,8 @@ define(function(require, exports){
                         whoIndex = who.index,
                         whereIndex = where.index,
                         diff = whereIndex - whoIndex,
-                        direction = diff / Math.abs(diff);
+                        direction = diff / Math.abs(diff),
+                        file;
 
                     if (whoPanel === wherePanel){
                         if (Math.abs(diff) <= 1){
@@ -49,12 +51,40 @@ define(function(require, exports){
                                 whereIndex -= direction;
                             }
                         }
-                    } else {
-                        //debugger;
-                    }
 
-                    dragWho = null;
-                    dragWhere = null;
+                        dragWho = null;
+                        dragWhere = null;
+                    } else {
+                        DocumentManager.getDocumentForPath(whoPath).always(function(document){
+                            var file = document.file;
+
+                            MainViewManager._moveView(whoPanel, wherePanel, file).always(function(){
+                                CommandManager.execute('file.open', {
+                                    fullPath: file.fullPath,
+                                    paneId: wherePanel
+                                }).always(function(){
+                                    var panelSelector = whoPanel === 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
+                                        anotherPanelSelector = whoPanel !== 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
+                                        filesSelector = '.open-files-container ul > li',
+                                        filesHolderSelector = '.open-files-container ul',
+                                        panel = $(panelSelector),
+                                        files = panel.find(filesSelector),
+                                        file = files[whoIndex],
+                                        anotherPanelHolder = $(anotherPanelSelector).find(filesHolderSelector);
+
+                                    file.remove();
+                                    anotherPanelHolder.prepend(file);
+
+                                    $(MainViewManager).trigger('workingSetSort', wherePanel === 'first-pane' ? 'second-pane' : 'first-pane');
+
+                                    MainViewManager.focusActivePane();
+
+                                    dragWho = null;
+                                    dragWhere = null;
+                                });
+                            });
+                        });
+                    }
                 }
             });
 
