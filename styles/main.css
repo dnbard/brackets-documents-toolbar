@@ -39,6 +39,15 @@
     display: inline-block;
     transition: 0.25s all;
     opacity: 0.6;
+    /* Added Border Radius 2px to Top Corners */
+    border-radius: 2px 2px 0 0;
+}
+
+/* Moved the Controls to the Right and removed their background */
+div.documents-holder > span.document {
+    position: absolute;
+    background: none;
+    right: 5px;
 }
 
 .ext-documents .document.dragged{
@@ -107,9 +116,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    border-width: 10px 10px 0px 0px;
-    border-style: solid;
-    border-color: white transparent transparent white;
+    /* Removed Square Corners */
     z-index: 10;
 }
 
