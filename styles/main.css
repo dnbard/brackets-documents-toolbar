@@ -41,6 +41,13 @@
     opacity: 0.6;
 }
 
+/* Moved the Controls to the Right and removed their background */
+div.documents-holder > span.document {
+    position: absolute;
+    background: none;
+    right: 5px;
+}
+
 .ext-documents .document.dragged{
     opacity: 0.5;
 }
