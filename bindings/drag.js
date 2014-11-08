@@ -27,17 +27,14 @@ define(function(require, exports){
                 $target.removeClass('dragged');
 
                 if (dragWho && dragWhere){
-                    var who = dragWho.attr('title'),
-                        where = dragWhere.attr('title'),
-                        whoPanel = MainViewManager.findInAllWorkingSets(who)[0].paneId,
-                        wherePanel = MainViewManager.findInAllWorkingSets(where)[0].paneId,
-                        workingSet = MainViewManager.getWorkingSet(),
-                        whoIndex = _.indexOf(workingSet, _.find(workingSet, function(el){
-                            return el._path === who;
-                        })),
-                        whereIndex = _.indexOf(workingSet, _.find(workingSet, function(el){
-                            return el._path === where;
-                        })),
+                    var whoPath = dragWho.attr('title'),
+                        wherePath = dragWhere.attr('title'),
+                        who = MainViewManager.findInAllWorkingSets(whoPath)[0],
+                        where = MainViewManager.findInAllWorkingSets(wherePath)[0],
+                        whoPanel = who.paneId,
+                        wherePanel = where.paneId,
+                        whoIndex = who.index,
+                        whereIndex = where.index,
                         diff = whereIndex - whoIndex,
                         direction = diff / Math.abs(diff);
 
@@ -52,6 +49,8 @@ define(function(require, exports){
                                 whereIndex -= direction;
                             }
                         }
+                    } else {
+                        //debugger;
                     }
 
                     dragWho = null;
