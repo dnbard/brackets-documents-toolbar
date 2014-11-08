@@ -29,6 +29,8 @@ define(function(require, exports){
                 if (dragWho && dragWhere){
                     var who = dragWho.attr('title'),
                         where = dragWhere.attr('title'),
+                        whoPanel = MainViewManager.findInAllWorkingSets(who)[0].paneId,
+                        wherePanel = MainViewManager.findInAllWorkingSets(where)[0].paneId,
                         workingSet = MainViewManager.getWorkingSet(),
                         whoIndex = _.indexOf(workingSet, _.find(workingSet, function(el){
                             return el._path === who;
@@ -39,14 +41,16 @@ define(function(require, exports){
                         diff = whereIndex - whoIndex,
                         direction = diff / Math.abs(diff);
 
-                    if (Math.abs(diff) <= 1){
-                        //No drag-n-drop until Brackets API is freezed
-                        //MainViewManager._getPaneIdForPath
-                        //MainViewManager._swapWorkingSetListIndexes(whoIndex, whereIndex);
-                    } else {
-                        while(whoIndex !== whereIndex){
-                            //MainViewManager._swapWorkingSetListIndexes(whoIndex, whereIndex);
-                            whereIndex -= direction;
+                    if (whoPanel === wherePanel){
+                        if (Math.abs(diff) <= 1){
+                            //No drag-n-drop until Brackets API is freezed
+                            //MainViewManager._getPaneIdForPath
+                            MainViewManager._swapWorkingSetListIndexes(wherePanel, whoIndex, whereIndex);
+                        } else {
+                            while(whoIndex !== whereIndex){
+                                MainViewManager._swapWorkingSetListIndexes(wherePanel, whoIndex, whereIndex);
+                                whereIndex -= direction;
+                            }
                         }
                     }
 
