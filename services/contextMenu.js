@@ -57,13 +57,40 @@ define(function(require, exports, module){
             //NOT IMPLEMENTED YET UNTIL BRACKETS PANEL API WILL BE USABLE
             var file = self.context,
                 fromPanel = panelContentProvider.isContain(file),
-                toPanel = panelContentProvider.selectOtherPanel(fromPanel);
+                toPanel = panelContentProvider.selectOtherPanel(fromPanel),
+                panelLocation;
+
+            if (!toPanel || fromPanel === toPanel ){
+                return false;
+            }
+
+            panelLocation = MainViewManager.findInAllWorkingSets(file._path)[0];
+
+            if (typeof panelLocation !== 'object'){
+                return false;
+            }
+
+            console.log(panelLocation);
 
             MainViewManager._moveView(fromPanel, toPanel, file).always(function(){
                 CommandManager.execute('file.open', {
                     fullPath: file.fullPath,
                     paneId: toPanel
                 }).always(function(){
+                    var panelSelector = panelLocation.paneId === 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
+                        anotherPanelSelector = panelLocation.paneId !== 'first-pane' ? '#working-set-list-first-pane' : '#working-set-list-second-pane',
+                        filesSelector = '.open-files-container ul > li',
+                        filesHolderSelector = '.open-files-container ul',
+                        panel = $(panelSelector),
+                        files = panel.find(filesSelector),
+                        file = files[panelLocation.index],
+                        anotherPanelHolder = $(anotherPanelSelector).find(filesHolderSelector);
+
+                    file.remove();
+                    anotherPanelHolder.prepend(file);
+
+                    $(MainViewManager).trigger('workingSetSort', panelLocation.paneId === 'first-pane' ? 'second-pane' : 'first-pane');
+
                     MainViewManager.focusActivePane();
                 });
             });
@@ -95,8 +122,8 @@ define(function(require, exports, module){
                     self.menu.addMenuDivider();
                 }
 
-                //self.menu.addMenuItem(self.moveToOtherPanel);
-                //self.menu.addMenuDivider();
+                self.menu.addMenuItem(self.moveToOtherPanel);
+                self.menu.addMenuDivider();
                 self.menu.addMenuItem(self.addNewRuleCommand);
                 self.menu.addMenuItem(self.clearRuleCommand);
             }, 100);
