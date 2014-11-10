@@ -4,6 +4,7 @@ define(function(require, exports, module){
         _ = require('../vendor/lodash'),
         ProjectManager = brackets.getModule('project/ProjectManager'),
         DocumentManager = brackets.getModule('document/DocumentManager'),
+        MainViewManager = brackets.getModule('view/MainViewManager'),
         defaultBackground = '#333333',
         defaultColor = '#FFFFFF',
         storage = require('../services/storage'),
@@ -63,7 +64,7 @@ define(function(require, exports, module){
         this.onClose = function(model, event){
             storage.setKey(storageRulesKey, ko.toJS(self.rules));
             event.preventDefault();
-            $(DocumentManager).trigger('workingSetSort');
+            $(MainViewManager).trigger('workingSetSort');
         }
 
         this.getCaption = function(rule){

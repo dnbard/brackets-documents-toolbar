@@ -51,7 +51,7 @@ define(function(require, exports, module){
             _.remove(colorRules, self.ruleHandler);
 
             storage.setKey(storageRulesKey, colorRules);
-            $(DocumentManager).trigger('workingSetSort');
+            $(MainViewManager).trigger('workingSetSort');
         });
 
         this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
