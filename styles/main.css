@@ -84,7 +84,7 @@ div.documents-holder > span.document {
 }
 
 .ext-documents .document.drag-target_right{
-    margin-right: 30px;
+    margin-right: 30px !important;
 }
 
 .ext-documents .document.selected{
@@ -129,11 +129,7 @@ div.documents-holder > span.document {
     background: #47484b;
 }
 
-.dark .ext-documents .document:before{
-    border-color: #47484b transparent transparent #47484b;
-}
-
-.ext-documents .document.modified:after{
+.ext-documents .document.modified:before{
     content: "";
     position: absolute;
     top: 0;
