@@ -3,6 +3,7 @@
     position: absolute;
     width: 100%;
     z-index: 100;
+    min-height: 28px;
 }
 
 .view-pane{
@@ -14,7 +15,8 @@
 }
 
 .pane-content{
-    padding-top: 30px;
+    padding-top: 28px;
+    padding-top: 28px;
     height: 100% !important;
 }
 
@@ -28,8 +30,8 @@
 }
 
 .ext-documents .document{
-    padding-left: 12px;
-    padding-right: 8px;
+    padding-left: 3px;
+    padding-right: 5px;
     padding-top: 6px;
     padding-bottom: 4px;
     margin-right: 4px;
@@ -41,6 +43,9 @@
     opacity: 0.6;
     /* Added Border Radius 2px to Top Corners */
     border-radius: 2px 2px 0 0;
+
+    height: 18px;
+    vertical-align: bottom;
 }
 
 /* Moved the Controls to the Right and removed their background */

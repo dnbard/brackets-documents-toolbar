@@ -267,6 +267,17 @@ define(function(require, exports, module){
             return prefs.get('close_left');
         }
 
+        this.getDocumentView = function(document){
+            var path = document._path,
+                name = document._name,
+                workingPanelSelector = panelId === 'first-pane'? '#working-set-list-first-pane' : '#working-set-list-second-pane',
+                workingPanel = $(workingPanelSelector),
+                fileViews = workingPanel.find('ul > li'),
+                documentIndex = MainViewManager.findInAllWorkingSets(path)[0].index;
+
+            return $(fileViews[documentIndex]).find('a').html();
+        }
+
         $MainViewManager.on('workingSetAdd', function(event, file, index, panel){
             if (self.panelId !== panel){
                 return;

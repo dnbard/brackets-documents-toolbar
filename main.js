@@ -4,7 +4,6 @@ define(function (require, exports, module) {
 
     ExtensionUtils.loadStyleSheet(module, 'styles/main.css');
     ExtensionUtils.loadStyleSheet(module, 'styles/awesome.css');
-    ExtensionUtils.loadStyleSheet(module, 'styles/pictonic.css');
     ExtensionUtils.loadStyleSheet(module, 'styles/moreSpace.css');
 
     require('./services/platform').init();
