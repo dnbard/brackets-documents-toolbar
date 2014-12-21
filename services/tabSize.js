@@ -44,6 +44,11 @@ define(function(require, exports, module){
             if (ratio > 1){
                 ratio = 1;
             }
+			
+			//prevent tabs from collapsing
+            if (ratio < 0){
+                ratio = 1;
+            }
 
             _.each(docs, function(doc){
                 var $doc = $(doc),
