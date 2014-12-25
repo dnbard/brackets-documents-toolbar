@@ -3,7 +3,7 @@
     "title": "Documents Toolbar",
     "description": "Adds toolbar with tabs of open documents on the top of the editor. Now with split view support!",
     "homepage": "https://github.com/dnbard/brackets-documents-toolbar",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "author": "Alex Bardanov",
     "license": "MIT",
     "engines": {
