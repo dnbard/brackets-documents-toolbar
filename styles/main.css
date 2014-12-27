@@ -41,7 +41,7 @@
     position: relative;
     background: #333;
     color: white;
-    display: inline-block;
+    display: inherit;
     transition: 0.25s all;
     opacity: 0.6;
     width: auto !important;
