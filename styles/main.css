@@ -58,6 +58,7 @@ div.documents-holder > span.document {
     position: absolute;
     background: none;
     right: 5px;
+    display: none;
 }
 
 .ext-documents .document.dragged{
