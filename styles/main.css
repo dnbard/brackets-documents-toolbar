@@ -2,7 +2,7 @@
     box-sizing: border-box;
     position: absolute;
     width: 100%;
-    z-index: 100;
+    z-index: 10;
     min-height: 28px;
 }
 
