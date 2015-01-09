@@ -1,9 +1,9 @@
 .ext-documents .document-holder {
     position: relative !important;
 }
-.ext-documents .document {
+/*.ext-documents .document {
     margin-right: -2px !important;
-}
+}*/
 div.documents-holder > span.document {
     padding-right: 2px;
     padding-left: 4px;

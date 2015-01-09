@@ -4,6 +4,7 @@
     width: 100%;
     z-index: 100;
     min-height: 28px;
+    background: #47484b;
 }
 
 .view-pane{
@@ -51,6 +52,7 @@
     height: 18px;
     vertical-align: bottom;
     overflow-x: hidden;
+    margin: 0 1px;
 }
 
 /* Moved the Controls to the Right and removed their background */
