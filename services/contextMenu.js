@@ -51,7 +51,12 @@ define(function(require, exports, module){
             _.remove(colorRules, self.ruleHandler);
 
             storage.setKey(storageRulesKey, colorRules);
-            $(MainViewManager).trigger('workingSetSort');
+
+            console.log(MainViewManager.getPaneIdList());
+
+            _.each(MainViewManager.getPaneIdList(), function(paneId){
+                MainViewManager.trigger('workingSetUpdate', [null, paneId]);
+            });
         });
 
         this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){

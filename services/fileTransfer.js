@@ -23,7 +23,7 @@ define(function(require, exports, module){
                 file.remove();
                 anotherPanelHolder.prepend(file);
 
-                $(MainViewManager).trigger('workingSetSort', data.toPanel === 'first-pane' ? 'second-pane' : 'first-pane');
+                MainViewManager.trigger('workingSetSort', data.toPanel === 'first-pane' ? 'second-pane' : 'first-pane');
 
                 MainViewManager.focusActivePane();
 

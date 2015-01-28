@@ -64,7 +64,7 @@ define(function(require, exports, module){
         this.onClose = function(model, event){
             storage.setKey(storageRulesKey, ko.toJS(self.rules));
             event.preventDefault();
-            $(MainViewManager).trigger('workingSetSort');
+            MainViewManager.trigger('workingSetUpdate');
         }
 
         this.getCaption = function(rule){

@@ -332,6 +332,7 @@ define(function(require, exports, module){
         $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
 
         $MainViewManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
+        $MainViewManager.on('workingSetUpdate', _.bind(this.handlePathChanges, this));
 
         this.isDocumentChanged = function(event, document){
             if (document.isDirty){
