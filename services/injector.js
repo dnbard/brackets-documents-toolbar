@@ -7,7 +7,6 @@ define(function(require, exports){
         openFilesSelector = '#open-files-container',
         template = require('text!../templates/holder.html'),
         MainViewManager = brackets.getModule('view/MainViewManager'),
-        $MainViewManager = $(MainViewManager),
         panelContentProvider = require('./panels');
     
     exports.init = function(){
@@ -19,7 +18,7 @@ define(function(require, exports){
 
         panelContentProvider.register(vm, 'first-pane');
         
-        $MainViewManager.on('paneCreate', function(){
+        MainViewManager.on('paneCreate', function(){
             var $holder = $(template),
                 vm = new DocumentsViewModel($holder, 'second-pane');
             $holder.css('background', $(openFilesSelector).css('background'));
@@ -29,7 +28,7 @@ define(function(require, exports){
             panelContentProvider.register(vm, 'second-pane');
         });
 
-        $MainViewManager.on('paneDestroy', function(){
+        MainViewManager.on('paneDestroy', function(){
             var vm = panelContentProvider.remove('second-pane');
             if (typeof vm.dispose === 'function'){
                 vm.dispose();

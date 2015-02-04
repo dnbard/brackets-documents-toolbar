@@ -1,15 +1,6 @@
-var DocumentManager = require('document/DocumentManager'),
-    MainViewManager = require('view/MainViewManager'),
-    WorkspaceManager = require('view/WorkspaceManager'),
-    AppInit = require('utils/AppInit');
-
 define(function(require, exports, module){
     var _ = require('../vendor/lodash'),
-        $DocumentManager = $(DocumentManager),
-        $MainViewManager = $(MainViewManager),
-        $WorkspaceManager = $(WorkspaceManager),
-        instance = new TabSizeService(),
-        indicator = require('../bindings/mouseIndicator');
+        instance = new TabSizeService();
 
     function TabSizeService(){
         var self = this;

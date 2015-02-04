@@ -11,9 +11,6 @@ define(function(require, exports, module){
         _ = require('../vendor/lodash'),
         Icons = require('../services/icons'),
         config = require('../config'),
-        $MainViewManager = $(MainViewManager),
-        $DocumentManager = $(DocumentManager),
-        $EditorManager = $(EditorManager),
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
         storage = require('../services/storage'),
@@ -278,18 +275,18 @@ define(function(require, exports, module){
             return $(fileViews[documentIndex]).find('a').html();
         }
 
-        $MainViewManager.on('workingSetAdd', function(event, file, index, panel){
+        MainViewManager.on('workingSetAdd', function(event, file, index, panel){
             if (self.panelId !== panel){
                 return;
             }
             self.addDocument(file);
         });
 
-        $MainViewManager.on('workingSetRemove', function(event, file){
+        MainViewManager.on('workingSetRemove', function(event, file){
             self.removeDocument(file);
         });
 
-        $MainViewManager.on('workingSetMove', function(e, file, sourcePaneId, destinationPaneId){
+        MainViewManager.on('workingSetMove', function(e, file, sourcePaneId, destinationPaneId){
             if (self.panelId === sourcePaneId){
                 self.removeDocument(file);
             }
@@ -299,7 +296,7 @@ define(function(require, exports, module){
             }
         });
 
-        $EditorManager.on('activeEditorChange', function(event, focusedEditor){
+        EditorManager.on('activeEditorChange', function(event, focusedEditor){
             if (!focusedEditor){
                 return;
             }
@@ -312,7 +309,7 @@ define(function(require, exports, module){
             self.selected(newDocument.file);
         });
 
-        $MainViewManager.on('workingSetAddList', function(event, files, panel){
+        MainViewManager.on('workingSetAddList', function(event, files, panel){
             if (self.panelId !== panel){
                 return;
             }
@@ -321,18 +318,18 @@ define(function(require, exports, module){
             });
         });
 
-        $MainViewManager.on('workingSetRemoveList', function(event, files){
+        MainViewManager.on('workingSetRemoveList', function(event, files){
             _.each(files, function(file){
                 self.removeDocument(file);
             });
         });
 
-        $DocumentManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
+        DocumentManager.on('fileNameChange', _.bind(this.handlePathChanges, this));
 
-        $DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
+        DocumentManager.on('pathDeleted', _.bind(this.handlePathChanges, this));
 
-        $MainViewManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
-        $MainViewManager.on('workingSetUpdate', _.bind(this.handlePathChanges, this));
+        MainViewManager.on('workingSetSort', _.bind(this.handlePathChanges, this));
+        MainViewManager.on('workingSetUpdate', _.bind(this.handlePathChanges, this));
 
         this.isDocumentChanged = function(event, document){
             if (document.isDirty){
@@ -345,9 +342,9 @@ define(function(require, exports, module){
             }
         }
 
-        $DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
+        DocumentManager.on('dirtyFlagChange', this.isDocumentChanged);
 
-        $DocumentManager.on('documentSaved', this.isDocumentChanged);
+        DocumentManager.on('documentSaved', this.isDocumentChanged);
 
         // look for brackets-git and attach handlers for its events
         if (typeof window === 'object') {
