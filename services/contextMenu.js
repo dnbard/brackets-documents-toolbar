@@ -52,11 +52,13 @@ define(function(require, exports, module){
 
             storage.setKey(storageRulesKey, colorRules);
 
-            console.log(MainViewManager.getPaneIdList());
-
             _.each(MainViewManager.getPaneIdList(), function(paneId){
                 MainViewManager.trigger('workingSetUpdate', [null, paneId]);
             });
+        });
+
+        this.showOptionsCommand = CommandManager.register('Show extension options', 'dte_showOptions', function(){
+            ModalService.showHandler();
         });
 
         this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
@@ -113,6 +115,7 @@ define(function(require, exports, module){
 
                 self.menu.addMenuItem(self.moveToOtherPanel);
                 self.menu.addMenuDivider();
+                self.menu.addMenuItem(self.showOptionsCommand);
                 self.menu.addMenuItem(self.addNewRuleCommand);
                 self.menu.addMenuItem(self.clearRuleCommand);
             }, 100);
@@ -132,7 +135,7 @@ define(function(require, exports, module){
             this.menu.addMenuItem(this.clearRuleCommand);
             this.addNewRuleCommand.setName('Change tab colors');
         } else {
-            this.addNewRuleCommand.setName('Set tab colors');
+            this.addNewRuleCommand.setName('Set current tab colors');
         }
 
         setTimeout(function(){
