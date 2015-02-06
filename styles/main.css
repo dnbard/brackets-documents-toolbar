@@ -41,7 +41,7 @@
     margin-right: 4px;
     position: relative;
     background: #333;
-    color: white;
+    color: rgba(255,255,255,0.75);
     display: inherit;
     transition: 0.25s all;
     opacity: 0.6;
@@ -96,7 +96,7 @@ div.documents-holder > span.document {
 }
 
 .ext-documents .document.selected{
-    color: rgb(0, 184, 255);
+    color: white;
     background: #1d1f21;
     opacity: 1;
 }
