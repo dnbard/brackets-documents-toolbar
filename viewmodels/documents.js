@@ -220,7 +220,8 @@ define(function(require, exports, module){
 
             return _.find(rules, function(rule){
                 var query = rule.name.replace('*', ''),
-                    currentProject;
+                    currentProject, filterByFile, filterByRegex,
+                    flags, pattern, regex;
 
                 if (rule.project){
                     currentProject = self.getCurrentProjectName();
@@ -229,7 +230,18 @@ define(function(require, exports, module){
                     }
                 }
 
-                return file._name.indexOf(query) >= 0;
+                filterByFile = file._name.indexOf(query) >= 0;
+
+                if (query.indexOf('/') !== -1){
+                    flags = query.replace(/.*\/([gimy]*)$/, '$1');
+                    pattern = query.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
+                    regex = new RegExp(pattern, flags);
+                    filterByRegex = !!file._parentPath.match(regex) || !!file._name.match(regex);
+                } else {
+                    filterByRegex = false;
+                }
+
+                return filterByFile || filterByRegex;
             });
         }
 
