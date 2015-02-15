@@ -58,11 +58,17 @@ define(function(require, exports, module){
             prefs.set('smallIcons', value);
         });
 
+        this.showCloseButton = ko.observable();
+        this.showCloseButton.subscribe(function(value){
+            prefs.set('showCloseButton', value);
+        });
+
         this.showWorkingFiles(prefs.get('workingFiles'));
         this.showIcons(prefs.get('icons'));
         this.useBracketsFont(prefs.get('brackets_font'));
         this.grayscaleIcons(prefs.get('grayscaleIcons'));
         this.smallIcons(prefs.get('smallIcons'));
+        this.showCloseButton(prefs.get('showCloseButton'));
     }
 
     module.exports = GeneralOptions;

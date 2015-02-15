@@ -39,6 +39,8 @@ define(function(require, exports, module){
             self.fontEnabled(value);
         });
 
+        this.isShowCloseButtonOnTabs = ko.observable(!!prefs.get('showCloseButton'));
+
         this.onDocumentClick = function(model, event){
             CommandManager.execute('file.open', {
                 fullPath: model._path
@@ -134,6 +136,8 @@ define(function(require, exports, module){
 
         var hoveredDocument = null;
         this.onDocumentMouseIn = function(document, event){
+            self.isShowCloseButtonOnTabs(!!prefs.get('showCloseButton'));
+
             if (!prefs.get('tooltip')){
                 return;
             }

@@ -12,17 +12,13 @@
                 <input type="checkbox" data-bind="checked: showWorkingFiles" />
                 <span>Show Working Files panel</span>
             </div>
-            <div style="display: none;">
-                <input type="checkbox" data-bind="checked: showIcons" />
-                <span>Show Icons</span>
-            </div>
-            <div style="display: none;">
-                <input type="checkbox" data-bind="checked: smallIcons" />
-                <span>Small Icons</span>
-            </div>
-            <div style="display: none;">
-                <input type="checkbox" data-bind="checked: grayscaleIcons" />
-                <span>Grayscale Icons</span>
+            <div>
+                <input type="checkbox" data-bind="checked: showCloseButton" />
+                <span>Show </span>
+                <span class="fa fa-times-circle"></span>
+                <span class="muted"> close button </span>
+                <span>on tab</span>
+                <span class="muted" data-bind="visible: !showCloseButton()">[use middle mouse button to close tabs]</span>
             </div>
             <div>
                 <input type="checkbox" data-bind="checked: useBracketsFont" />

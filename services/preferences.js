@@ -11,7 +11,8 @@ define(function(require, exports){
             close_left: false,
             workingFiles: true,
             brackets_font: true,
-            grayscaleIcons: false
+            grayscaleIcons: false,
+            showCloseButton: true
         };
 
     exports.init = function(){
