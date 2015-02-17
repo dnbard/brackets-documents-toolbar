@@ -6,15 +6,16 @@ define(function(require, exports, module){
 
     ko.bindingHandlers.mouseIndicator = {
         init: function(element) {
-            var id = element.id;
+            var id = element.id,
+                $element = $(element);
             indicators[id] = false;
 
-            $(element).on('mouseenter', function(){
+            function onMouseEnter(){
                 var id = element.id;
                 indicators[id] = true;
-            });
+            }
 
-            $(element).on('mouseleave', function(){
+            function onMouseLeave(){
                 var id = element.id;
                 indicators[id] = false;
 
@@ -25,6 +26,14 @@ define(function(require, exports, module){
                         handlers[id] = null;
                     }, 250);
                 }
+            }
+
+            $element.on('mouseenter', onMouseEnter);
+            $element.on('mouseleave', onMouseLeave);
+
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function(){
+                $element.off('mouseenter', onMouseEnter);
+                $element.off('mouseleave', onMouseLeave);
             });
         }
     };

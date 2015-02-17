@@ -56,20 +56,20 @@ define(function(require, exports){
                         dragWhere = null;
                     } else {
                         DocumentManager.getDocumentForPath(fromPath).always(function(document){
-                        var file = document.file,
-                            fileTransfer = new FileTransfer();
+                            var file = document.file,
+                                fileTransfer = new FileTransfer();
 
-                            fileTransfer.toAnotherPanel({
-                                fromPanel: fromPanel,
-                                toPanel: toPanel,
-                                file: file,
-                                fromIndex: fromIndex,
-                                callback: function(){
-                                    dragWho = null;
-                                    dragWhere = null;
-                                }
+                                fileTransfer.toAnotherPanel({
+                                    fromPanel: fromPanel,
+                                    toPanel: toPanel,
+                                    file: file,
+                                    fromIndex: fromIndex,
+                                    callback: function(){
+                                        dragWho = null;
+                                        dragWhere = null;
+                                    }
+                                });
                             });
-                        });
                     }
                 }
             });
@@ -130,6 +130,16 @@ define(function(require, exports){
                 event.originalEvent.dataTransfer.dropEffect = 'move';
 
                 return false;
+            });
+
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function(){
+                var $element = $(element);
+
+                $element.off('dragstart');
+                $element.off('dragend');
+                $element.off('dragenter');
+                $element.off('dragleave');
+                $element.off('dragover');
             });
         }
     };

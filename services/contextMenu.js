@@ -62,7 +62,6 @@ define(function(require, exports, module){
         });
 
         this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
-            //NOT IMPLEMENTED YET UNTIL BRACKETS PANEL API WILL BE USABLE
             var file = self.context,
                 fromPanel = panelContentProvider.isContain(file),
                 toPanel = panelContentProvider.selectOtherPanel(fromPanel),

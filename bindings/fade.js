@@ -13,12 +13,17 @@ define(function(require, exports){
         update: function(element, valueAccessor) {
             var value = valueAccessor();
             value = ko.unwrap(value);
+
             if (typeof value === 'function'){
                 value = value();
             }
 
-            if (value){ $(element).fadeIn(); }
-            else { $(element).fadeOut(); }
+            if (value){
+                $(element).fadeIn();
+            }
+            else {
+                $(element).fadeOut();
+            }
         }
     };
 });
