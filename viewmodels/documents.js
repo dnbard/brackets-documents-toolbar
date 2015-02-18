@@ -1,10 +1,4 @@
-/*jshint -W033 */
-var DocumentManager = require('document/DocumentManager'),
-    MainViewManager = require('view/MainViewManager'),
-    ProjectManager = require('project/ProjectManager'),
-    CommandManager = require('command/CommandManager'),
-    EditorManager = require('editor/EditorManager'),
-    fs = require("fileSystemImpl");
+var fs = require("fileSystemImpl");
 
 define(function(require, exports, module){
     var ko = require('../vendor/knockout'),
@@ -14,7 +8,14 @@ define(function(require, exports, module){
         prefs = require('../services/preferences'),
         ModalService = require('../services/modal'),
         storage = require('../services/storage'),
-        contextMenu = require('../services/contextMenu');
+        contextMenu = require('../services/contextMenu'),
+        closedDocumentsCollection = require('../services/closedDocuments'),
+        KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
+        EditorManager = brackets.getModule('editor/EditorManager'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
+        MainViewManager = brackets.getModule('view/MainViewManager'),
+        ProjectManager = brackets.getModule('project/ProjectManager'),
+        CommandManager = brackets.getModule('command/CommandManager');
     
     function DocumentsViewModel(element, panelId){
         var self = this;
@@ -72,6 +73,26 @@ define(function(require, exports, module){
                 paneId: this.panelId
             });
         }
+
+        KeyBindingManager.addBinding(CommandManager.register('Reopen document', 'dt.reopenDocument', function(){
+            var lastDocument = closedDocumentsCollection.get();
+
+            if (lastDocument === null){
+                return;
+            }
+
+            DocumentManager.getDocumentForPath(lastDocument.path).done(function(doc){
+                if (doc){
+                    DocumentManager.setCurrentDocument(doc);
+                    if (!_.find(self.documents(), function(file){
+                        return file === doc.file;
+                    })){
+                        DocumentManager.addToWorkingSet(doc.file, -1);
+                    }
+                    self.selected(doc.file);
+                }
+            });
+        }), 'Ctrl-Shift-T');
 
         this.onDocumentAdd = function(){
             fs.showOpenDialog(false, false, 'Open File', config.path, null, function(err, files){
