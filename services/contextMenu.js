@@ -138,9 +138,8 @@ define(function(require, exports, module){
             this.addNewRuleCommand.setName('Set current tab colors');
         }
 
-        if (closedDocumentsCollection.size() === 0){
-            this.menu.removeMenuItem(reopenDocumentCommand);
-        } else {
+        this.menu.removeMenuItem(reopenDocumentCommand);
+        if (closedDocumentsCollection.size() !== 0){
             reopenDocumentCommand.setName('Reopen "' + closedDocumentsCollection.getName() + '"');
             this.menu.addMenuItem(reopenDocumentCommand, null, CommandMenus.AFTER, 'file.close_below');
         }
