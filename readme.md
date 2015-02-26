@@ -17,3 +17,4 @@ New in *v0.5.x*:
 * Ability to hide *close button* for tabs (useful when huge amount of tabs are opened)
 * Middle mouse button click will close the selected tab
 * Ctrl+Shift+T hotkey to reopen recently closed tabs
+* Lock feature for tabs that prevent tab closing

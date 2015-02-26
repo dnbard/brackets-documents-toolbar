@@ -30,6 +30,30 @@ define(function(require, exports, module){
         this.changed = ko.observableArray([]);
         this.modified = ko.observableArray([]);
 
+        this.locked = ko.observableArray([]);
+
+        DocumentManager.on('dte_lockStatusUpdated', function(event, data){
+            var documentInList = !!_.find(self.locked(), function(lockedDocumentPath){
+                return lockedDocumentPath === data.path;
+            });
+
+            if (data.status === 'locked' && !documentInList){
+                self.locked.push(data.path);
+            }
+
+            if (data.status === 'unlocked' && documentInList){
+                self.locked.remove(function(lockedDocumentPath){
+                    return lockedDocumentPath === data.path;
+                });
+            }
+        });
+
+        this.isDocumentLocked = function(data){
+            return !!_.find(self.locked(), function(lockedDocumentPath){
+                return lockedDocumentPath === data._path;
+            });
+        }
+
         this.iconsEnabled = ko.observable(prefs.get('icons'));
         prefs.notifier('icons', function(value){
             self.iconsEnabled(value);
@@ -68,6 +92,12 @@ define(function(require, exports, module){
         }
 
         this.onDocumentClose = function(file){
+            if (!!_.find(self.locked(), function(lockedDocumentPath){
+                return lockedDocumentPath === file._path;
+            })){
+                return false;
+            }
+
             CommandManager.execute('file.close', {
                 file: file,
                 paneId: this.panelId

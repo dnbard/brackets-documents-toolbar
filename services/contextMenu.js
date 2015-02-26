@@ -1,12 +1,12 @@
 var CommandMenus = require('command/Menus'),
     CommandManager = require('command/CommandManager'),
+    DocumentManager = require('document/DocumentManager'),
     AppInit = require('utils/AppInit');
 
 define(function(require, exports, module){
     var instance = new ContextMenuService(),
         _ = require('../vendor/lodash'),
         storage = require('./storage'),
-        DocumentManager = brackets.getModule('document/DocumentManager'),
         ProjectManager = brackets.getModule('project/ProjectManager'),
         MainViewManager = brackets.getModule('view/MainViewManager'),
         closedDocumentsCollection = require('./closedDocuments'),
@@ -60,6 +60,38 @@ define(function(require, exports, module){
 
         this.showOptionsCommand = CommandManager.register('Show extension options', 'dte_showOptions', function(){
             ModalService.showHandler();
+        });
+
+        this.lockedList = [];
+
+        this.lockCommand = CommandManager.register('Lock document', 'dte_lockDocument', function(){
+            DocumentManager.trigger('dte_lockStatusUpdated', {
+                path: self.context._path,
+                status: 'locked'
+            });
+        });
+
+        this.unlockCommand = CommandManager.register('Unlock document', 'dte_unlockDocument', function(){
+            DocumentManager.trigger('dte_lockStatusUpdated', {
+                path: self.context._path,
+                status: 'unlocked'
+            });
+        });
+
+        DocumentManager.on('dte_lockStatusUpdated', function(event, data){
+            var documentInList = !!_.find(self.lockedList, function(lockedDocumentPath){
+                return lockedDocumentPath === data.path;
+            });
+
+            if (data.status === 'locked' && !documentInList){
+                self.lockedList.push(data.path);
+            }
+
+            if (data.status === 'unlocked' && documentInList){
+                _.remove(self.lockedList, function(lockedDocumentPath){
+                    return lockedDocumentPath === data.path;
+                });
+            }
         });
 
         this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
@@ -142,6 +174,16 @@ define(function(require, exports, module){
         if (closedDocumentsCollection.size() !== 0){
             reopenDocumentCommand.setName('Reopen "' + closedDocumentsCollection.getName() + '"');
             this.menu.addMenuItem(reopenDocumentCommand, null, CommandMenus.AFTER, 'file.close_below');
+        }
+
+        if (!!_.find(self.lockedList, function(lockedDocumentPath){
+            return lockedDocumentPath === context._path;
+        })){
+            this.menu.removeMenuItem(self.lockCommand);
+            this.menu.addMenuItem(self.unlockCommand, null, CommandMenus.BEFORE, 'dte_showOptions');
+        } else {
+            this.menu.removeMenuItem(self.unlockCommand);
+            this.menu.addMenuItem(self.lockCommand, null, CommandMenus.BEFORE, 'dte_showOptions');
         }
 
         setTimeout(function(){

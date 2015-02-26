@@ -7,7 +7,7 @@
         </span>
         <span class="document-holder brFont" data-bind="foreach: documents">
             <span class="document" data-bind="style:{background: $parent.getDocumentBackground($data), color: $parent.getDocumentNameColor($data)}, css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data), modified: $parent.isModified($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu, mousedown: $parent.onDocumentMouseDown}, attr:{title: $data._path}, drag: true">
-                <span data-bind="html: $parent.getDocumentView($data)"></span>
+                <span data-bind="html: $parent.getDocumentView($data), css:{locked: $parent.isDocumentLocked($data)}"></span>
                 <span class="document-close" data-bind="click: $parent.onDocumentClose, style:{color: $parent.getDocumentNameColor($data)}, visible: $parent.isShowCloseButtonOnTabs">
                     <i class="fa fa-times-circle"></i>
                 </span>

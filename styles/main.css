@@ -55,6 +55,11 @@
     margin: 0 1px;
 }
 
+.ext-documents .document > .locked{
+    font-weight: bold !important;
+    text-decoration: underline;
+}
+
 /* Moved the Controls to the Right and removed their background */
 div.documents-holder > span.document {
     position: absolute;
