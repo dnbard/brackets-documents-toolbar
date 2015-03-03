@@ -288,6 +288,19 @@ div.documents-holder > span.document {
     vertical-align: bottom;
     display: inline-block;
     margin-right: 35px;
+    display: inline-block;
+}
+
+.color-text{
+    width: 90%;
+    display: inline-block;
+    margin: 4px auto;
+}
+
+#color-foreground, #color-background{
+    display: inline-block;
+    width: 49%;
+    text-align: center;
 }
 
 .colorpicker .color {
@@ -331,14 +344,16 @@ div.documents-holder > span.document {
     border-radius: 150px;
 }
 
+.colorpicker .track canvas{
+    left: 10px;
+}
+
 .colorpicker .dropdown {
     list-style: none;
     display: none;
     width: 27px;
     position: absolute;
-    top: 28px;
     border: 1px solid #ccc;
-    left: 0;
     z-index: 1000;
 }
 

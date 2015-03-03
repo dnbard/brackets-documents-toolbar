@@ -48,10 +48,20 @@
                     </div>
                 </div>
                 <div class="_row">
-                    <span>Background:</span>
-                    <div class="colorpicker" data-bind="colorpicker: background"></div>
-                    <span>Color:</span>
-                    <div class="colorpicker" data-bind="colorpicker: color"></div>
+                    <div id="color-background">
+                        <div style="text-align: center;">
+                            <span>Background:</span>
+                            <div class="colorpicker" data-bind="colorpicker: background"></div>
+                        </div>
+                        <input class="color-text" data-bind="textInput: background" />
+                    </div>
+                    <div id="color-foreground">
+                        <div style="text-align: center;">
+                            <span>Color:</span>
+                            <div class="colorpicker" data-bind="colorpicker: color"></div>
+                        </div>
+                        <input class="color-text" data-bind="textInput: color" />
+                    </div>
                 </div>
                 <div class="_row tab-preview" data-bind="style:{color: color, background: background}">
                     <p>Preview</p>

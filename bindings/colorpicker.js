@@ -16,12 +16,6 @@ define(function(require, exports){
             $el.append(colorPickerTemplate);
             $el.tinycolorpicker();
 
-            //set default color
-            setTimeout(function(){
-                $el.find('.colorInner')
-                    .css('background-color', ko.unwrap(valueAccessor()));
-            }, 0);
-
             $el.on('change', onChange);
 
             ko.utils.domNodeDisposal.addDisposeCallback(element, function(){
@@ -30,6 +24,12 @@ define(function(require, exports){
 
                 //TODO: dispose the instance of tinycolorpicker
             });
+        },
+        update: function(element, valueAccessor){
+            //setTimeout(function(){
+                $(element).find('.colorInner')
+                    .css('background-color', ko.unwrap(valueAccessor()));
+            //}, 0);
         }
     };
 });
