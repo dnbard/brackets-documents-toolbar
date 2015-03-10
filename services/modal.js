@@ -4,13 +4,18 @@ define(function(require, exports){
         ko = require('../vendor/knockout'),
         ModalViewModel = require('../viewmodels/options');
 
-    function showHandler(){
-        var dlg = Dialogs.showModalDialogUsingTemplate(modalTemplate)._$dlg,
-            viewModel = new ModalViewModel(dlg);
+    function showModal(Viewmodel, template){
+        var dlg = Dialogs.showModalDialogUsingTemplate(template)._$dlg,
+            viewModelInstance = new Viewmodel(dlg);
 
-        ko.applyBindings(viewModel, dlg[0]);
-        return viewModel;
+        ko.applyBindings(viewModelInstance, dlg[0]);
+        return viewModelInstance;
+    }
+
+    function showHandler(){
+        return showModal(ModalViewModel, modalTemplate);
     }
 
     exports.showHandler = showHandler;
+    exports.showModal = showModal;
 });

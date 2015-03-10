@@ -280,6 +280,26 @@ div.documents-holder > span.document {
     color: black;
 }
 
+.documents-toolbar_modal.incompatible-warning .modal-body{
+    min-height: 250px;
+}
+
+.incompatible-warning .incompatible-warning__extensions{
+    margin-top: 15px;
+}
+
+.incompatible-warning .incompatible-warning__extension{
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.incompatible-warning .incompatible-warning__extension button{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .colorpicker{
     width: 30px;
     height: 30px;
