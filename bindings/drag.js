@@ -17,26 +17,38 @@ define(function(require, exports){
             $el.attr('draggable','true');
 
             $el.on('dragstart', function(event){
-                var $target = $(event.target);
+                var $target = $(event.target),
+                    $dragPanels = $('.ext-documents');
 
                 $target.addClass('dragged');
-
                 dragWho = $target;
+
+                $dragPanels.on('dragenter', function(event){
+                    dragWhere = 'panel';
+                });
+
+                $dragPanels.on('dragover', function(event){
+                    event.originalEvent.dataTransfer.dropEffect = 'move';
+
+                    return false;
+                });
             });
 
             $el.on('dragend', function(event){
-                var $target = $(event.target);
+                var $target = $(event.target),
+                    $dragPanels = $('.ext-documents');
+
                 $target.removeClass('dragged');
 
                 if (dragWho && dragWhere){
                     var fromPath = dragWho.attr('title'),
-                        toPath = dragWhere.attr('title'),
+                        toPath = dragWhere !== 'panel' ? dragWhere.attr('title') : null,
                         from = MainViewManager.findInAllWorkingSets(fromPath)[0],
-                        where = MainViewManager.findInAllWorkingSets(toPath)[0],
+                        where = toPath ? MainViewManager.findInAllWorkingSets(toPath)[0] : null,
                         fromPanel = from.paneId,
-                        toPanel = where.paneId,
+                        toPanel = where ? where.paneId : fromPanel === 'first-pane' ? 'second-pane' : 'first-pane',
                         fromIndex = from.index,
-                        toIndex = where.index,
+                        toIndex = where ? where.index : $('#' + toPanel + ' .ext-documents .document-holder > .document').length,
                         diff = toIndex - fromIndex,
                         direction = diff / Math.abs(diff);
 
@@ -71,6 +83,9 @@ define(function(require, exports){
                                 });
                             });
                     }
+
+                    $dragPanels.off('dragover');
+                    $dragPanels.off('dragenter');
                 }
             });
 
@@ -89,6 +104,8 @@ define(function(require, exports){
                 }
 
                 dragWhere = $target;
+
+                return false;
             });
 
             $el.on('dragleave', function(event){
@@ -124,6 +141,8 @@ define(function(require, exports){
                         dragWhere = null;
                     }, 1);
                 }
+
+                return false;
             });
 
             $el.on('dragover', function(event){
