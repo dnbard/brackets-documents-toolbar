@@ -24,9 +24,9 @@ define(function (require, exports, module) {
 
     require('./services/onlineTracking').init();
 
-    AppInit.appReady(function(){
+    /*AppInit.appReady(function(){
         compatibilityService.check();
-    });
+    });*/
 
     new GeneralOptions();
 });
