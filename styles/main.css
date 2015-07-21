@@ -34,7 +34,7 @@
 }
 
 .ext-documents .document{
-    padding-left: 3px;
+    padding-left: 10px;
     padding-right: 5px;
     padding-top: 6px;
     padding-bottom: 4px;
@@ -65,6 +65,14 @@ div.documents-holder > span.document {
     position: absolute;
     background: none;
     right: 5px;
+    display: none;
+}
+
+.document > span > * {
+    vertical-align: top;
+}
+
+.document > span .file-icon-secondary{
     display: none;
 }
 
