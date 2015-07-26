@@ -5,8 +5,8 @@
 // use require('./onlineTrackingClient').init() to activate tracking
 
 define(function(require, exports){
-    var trackingServiceUrl = 'http://brackets-online.herokuapp.com/',
-        // http://brackets-online.herokuapp.com/ is an address of default tracking service
+    var trackingServiceUrl = 'http://online-dnbard.rhcloud.com/',
+        // http://online-dnbard.rhcloud.com/ is an address of default tracking service
         // Change it if you use self-hosting instance of online tracking service
         appToken = '53eca7616073b96ad100017a',
         // read https://github.com/dnbard/brackets-extension-rating/wiki/Online-and-max-users-counters-in-this-extension
