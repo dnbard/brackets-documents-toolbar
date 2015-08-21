@@ -52,6 +52,12 @@ define(function(require, exports){
                         diff = toIndex - fromIndex,
                         direction = diff / Math.abs(diff);
 
+                    if (where === null && MainViewManager.getPaneIdList().length === 1 && toIndex === 0){
+                        //don't let the send tab to second panel if it isn't active
+                        //https://github.com/dnbard/brackets-documents-toolbar/issues/53
+                        return;
+                    }
+
                     if (fromPanel === toPanel){
                         if (Math.abs(diff) <= 1){
                             //No drag-n-drop until Brackets API is freezed
