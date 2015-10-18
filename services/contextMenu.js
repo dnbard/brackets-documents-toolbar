@@ -20,6 +20,7 @@ define(function(require, exports, module){
             panelContentProvider = require('./panels');
 
         this.context = null;
+        this.localization = require('./localization'),
 
         this.menu = CommandMenus.registerContextMenu(contextMenuId);
 
@@ -46,7 +47,7 @@ define(function(require, exports, module){
             viewModel.getOrCreateRule(self.context._name);
         });
 
-        this.clearRuleCommand = CommandManager.register('Clear custom colors', 'dte_clearRule', function(){
+        this.clearRuleCommand = CommandManager.register(this.localization.get('commandClearColors'), 'dte_clearRule', function(){
             var colorRules = storage.getKey(storageRulesKey) || {};
 
             _.remove(colorRules, self.ruleHandler);
@@ -58,20 +59,20 @@ define(function(require, exports, module){
             });
         });
 
-        this.showOptionsCommand = CommandManager.register('Show extension options', 'dte_showOptions', function(){
+        this.showOptionsCommand = CommandManager.register(this.localization.get('commandShowOptions'), 'dte_showOptions', function(){
             ModalService.showHandler();
         });
 
         this.lockedList = [];
 
-        this.lockCommand = CommandManager.register('Lock document', 'dte_lockDocument', function(){
+        this.lockCommand = CommandManager.register(this.localization.get('commandLock'), 'dte_lockDocument', function(){
             DocumentManager.trigger('dte_lockStatusUpdated', {
                 path: self.context._path,
                 status: 'locked'
             });
         });
 
-        this.unlockCommand = CommandManager.register('Unlock document', 'dte_unlockDocument', function(){
+        this.unlockCommand = CommandManager.register(this.localization.get('commandUnlock'), 'dte_unlockDocument', function(){
             DocumentManager.trigger('dte_lockStatusUpdated', {
                 path: self.context._path,
                 status: 'unlocked'
@@ -94,7 +95,7 @@ define(function(require, exports, module){
             }
         });
 
-        this.moveToOtherPanel = CommandManager.register('Move to another panel', 'dte_moveToAnotherPanel', function(){
+        this.moveToOtherPanel = CommandManager.register(this.localization.get('commandMoveToPanel'), 'dte_moveToAnotherPanel', function(){
             var file = self.context,
                 fromPanel = panelContentProvider.isContain(file),
                 toPanel = panelContentProvider.selectOtherPanel(fromPanel),
@@ -165,14 +166,14 @@ define(function(require, exports, module){
 
         if (_.find(colorRules, this.ruleHandler)){
             this.menu.addMenuItem(this.clearRuleCommand);
-            this.addNewRuleCommand.setName('Change tab colors');
+            this.addNewRuleCommand.setName(this.localization.get('commandChangeColors'));
         } else {
-            this.addNewRuleCommand.setName('Set current tab colors');
+            this.addNewRuleCommand.setName(this.localization.get('commandSetColors'));
         }
 
         this.menu.removeMenuItem(reopenDocumentCommand);
         if (closedDocumentsCollection.size() !== 0){
-            reopenDocumentCommand.setName('Reopen "' + closedDocumentsCollection.getName() + '"');
+            reopenDocumentCommand.setName(this.localization.get('reopen') + ' ' + closedDocumentsCollection.getName());
             this.menu.addMenuItem(reopenDocumentCommand, null, CommandMenus.AFTER, 'file.close_below');
         }
 

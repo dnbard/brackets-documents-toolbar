@@ -29,17 +29,18 @@
 
     "openFile": "Open file",
     "reopen": "Reopen",
-    "show": "Show",
-    "closeButton": "close button",
+    "show": "Show ",
+    "closeButton": " close button ",
     "onTab": "on tab",
     "applyTo": "Apply to",
-    "use": "use",
+    "use": "Use",
     "regExp": "RegExp",
     "constructRule": " to construct complex rules.",
     "project": "Project",
-    "background": "Background",
-    "color": "Color",
+    "background": "Background:",
+    "color": "Color:",
     "preview": "Preview",
     "remove": "Remove",
-    "close": "Close"
+    "close": "Close",
+    "path": "Path:"
 }
