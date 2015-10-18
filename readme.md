@@ -18,3 +18,7 @@ New in *v0.5.x*:
 * Middle mouse button click will close the selected tab
 * Ctrl+Shift+T hotkey to reopen recently closed tabs
 * Lock feature for tabs that prevent tab closing
+
+Localization:
+* Documents Toolbar are available in English
+* [Help](https://crowdin.com/project/documents-toolbar/invite) translate it to different languages
