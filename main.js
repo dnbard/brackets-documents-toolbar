@@ -24,7 +24,5 @@ define(function (require, exports, module) {
     require('./services/tabSize');
     require('./services/fonts').init();
 
-    require('./services/onlineTracking').init();
-
     new GeneralOptions();
 });
