@@ -100,7 +100,7 @@ define(function(require, exports, module){
 
             CommandManager.execute('file.close', {
                 file: file,
-                paneId: this.panelId
+                paneId: self.panelId
             });
         }
 
