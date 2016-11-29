@@ -23,6 +23,7 @@ define(function(require, exports, module){
         this.element = element;
         this.panelId = panelId;
         this.documents = ko.observableArray([]);
+        this.secondRow = ko.observableArray([]);
         this.selected = ko.observable(null);
         this.selectedPath = ko.computed(function(){
             return this.selected() ? this.selected()._path : '';
@@ -175,6 +176,14 @@ define(function(require, exports, module){
 
         this.addDocument = function(doc){
             this.documents.push(doc);
+            console.log(this.documents().length);
+            console.log(this.secondRow().length);
+            if(this.documents().length > 5) {
+                this.secondRow.push(doc);
+            }
+            else {
+                this.documents.push(doc);
+            }
         }
 
         this.removeDocument = function(doc){
@@ -260,6 +269,9 @@ define(function(require, exports, module){
             var fileNames = [];
 
             _.each(this.documents(), function(document){
+                fileNames.push(document._name);
+            });
+            _.each(this.secondRow(), function(document){
                 fileNames.push(document._name);
             });
 
