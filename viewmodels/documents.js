@@ -117,6 +117,8 @@ define(function(require, exports, module){
                     DocumentManager.setCurrentDocument(doc);
                     if (!_.find(self.documents(), function(file){
                         return file === doc.file;
+                    }) && !_.find(seld.secondRow(), function(file) {
+                        return file === doc.file;
                     })){
                         DocumentManager.addToWorkingSet(doc.file, -1);
                     }
