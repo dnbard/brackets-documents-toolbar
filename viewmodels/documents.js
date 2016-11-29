@@ -177,8 +177,6 @@ define(function(require, exports, module){
         }
 
         this.addDocument = function(doc){
-            console.log(this.documents().length);
-            console.log(this.secondRow().length);
             if(this.documents().length > 5) {
                 this.secondRow.push(doc);
             }
@@ -459,9 +457,16 @@ define(function(require, exports, module){
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
         this.documents([]);
+        this.secondRow([]);
         this.selected(null);
 
-        this.documents(this.getWorkingSet());
+        var temp = this.getWorkingSet();
+        for(var i = 0; i < 5; i++) {
+            this.documents.push(temp[i]);
+        }
+        for(var j = 5; j < temp.length; j++) {
+            this.secondRow.push(temp[j]);
+        }
         this.selected(this.getCurrentDocument());
     }
     
