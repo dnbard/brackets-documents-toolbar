@@ -1,0 +1,30 @@
+<div id="ext-documents" class="ext-documents" data-bind="mouseIndicator: true">
+    <div class="documents-holder">
+        <span class="document">
+            <i class="fa fa-folder-open-o button-icon" data-bind="click: onDocumentAdd" title="Open file"></i>
+            <i class="fa fa-cog button-icon" data-bind="click: onShowOptions" title="Show extension's options"></i>
+            <i class="fa fa-times button-icon" data-bind="click: onDocumentCloseAll" title="Close all open documents"></i>
+        </span>
+        <span class="document-holder brFont" data-bind="foreach: documents">
+            <span class="document" data-bind="style:{background: $parent.getDocumentBackground($data), color: $parent.getDocumentNameColor($data)}, css:{selected: $data._path === $parent.selectedPath(), changed: $parent.isChanged($data), modified: $parent.isModified($data)}, click: $parent.onDocumentClick, event:{mouseover: $parent.onDocumentMouseIn, mouseleave: $parent.onDocumentMouseLeave, contextmenu: $parent.onDocumentContextMenu, mousedown: $parent.onDocumentMouseDown}, attr:{title: $data._path}, drag: true">
+                <span data-bind="html: $parent.getDocumentView($data), css:{locked: $parent.isDocumentLocked($data)}"></span>
+                <span class="document-close" data-bind="click: $parent.onDocumentClose, style:{color: $parent.getDocumentNameColor($data)}, visible: $parent.isShowCloseButtonOnTabs">
+                    <i class="fa fa-times-circle"></i>
+                </span>
+            </span>
+        </span>
+    </div>
+    <div data-bind="with: tooltip, visible: tooltip">
+        <div class="ext-documents-tooltip" data-bind="style:{left: $parent.getTooltipPosition($data)}">
+            <div class="arrow-up"></div>
+            <div class="ext-documents-tooltip_header">
+                <span class="document-icon" data-bind="css: $parent.getDocumentIcon(data), style:{color: $parent.getDocumentIconColor(data)}"></span>
+                <span data-bind="text: data._name"></span>
+            </div>
+            <div>
+                <span data-bind="locale: 'path'"></span>
+                <span class="ext-documents-tooltip_path" data-bind="text: $parent.getRelativePath(data)"></span>
+            </div>
+        </div>
+    </div>
+</div>
