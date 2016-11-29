@@ -189,6 +189,9 @@ define(function(require, exports, module){
             self.documents.remove(function(el){
                 return el._path === doc._path;
             });
+            self.secondRow.remove(function(el){
+                return el._path === doc._path;
+            });
         }
 
         this.tooltip = ko.observable(null);
