@@ -186,6 +186,7 @@ define(function(require, exports, module){
             else {
                 this.documents.push(doc);
             }
+            this.reloadTabs();
         }
 
         this.removeDocument = function(doc){
@@ -195,6 +196,7 @@ define(function(require, exports, module){
             self.secondRow.remove(function(el){
                 return el._path === doc._path;
             });
+            this.reloadTabs();
         }
 
         this.tooltip = ko.observable(null);
@@ -333,6 +335,21 @@ define(function(require, exports, module){
                 return rule.background;
             }
             return 'inherited';
+        }
+        
+        this.reloadTabs = function() {
+            this.documents([]);
+            this.secondRow([]);
+            this.selected(null);
+
+            var temp = this.getWorkingSet();
+            for(var i = 0; i < 5; i++) {
+                this.documents.push(temp[i]);
+            }
+            for(var j = 5; j < temp.length; j++) {
+                this.secondRow.push(temp[j]);
+            }
+            this.selected(this.getCurrentDocument());
         }
 
         this.getDocumentNameColor = function(file){
