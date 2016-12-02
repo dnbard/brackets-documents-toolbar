@@ -497,6 +497,8 @@ define(function(require, exports, module){
             this.secondRow.push(temp[j]);
         }
         this.selected(this.getCurrentDocument());
+        
+        this.reloadTabs();
     }
     
     DocumentsViewModel.prototype.getWorkingSet = function(){
