@@ -22,8 +22,8 @@ define(function(require, exports, module){
 
         this.element = element;
         this.panelId = panelId;
-        this.documents = ko.observableArray([]);
-        this.secondRow = ko.observableArray([]);
+        this.documents = ko.observableArray([]); // Holds the documents for the first tab row
+        this.secondRow = ko.observableArray([]); // Holds the documents for the second tab row
         this.selected = ko.observable(null);
         this.selectedPath = ko.computed(function(){
             return this.selected() ? this.selected()._path : '';
@@ -117,6 +117,7 @@ define(function(require, exports, module){
                     DocumentManager.setCurrentDocument(doc);
                     if (!_.find(self.documents(), function(file){
                         return file === doc.file;
+                        // Check also that the document is located at the second row
                     }) && !_.find(seld.secondRow(), function(file) {
                         return file === doc.file;
                     })){
@@ -177,23 +178,28 @@ define(function(require, exports, module){
         }
 
         this.addDocument = function(doc){
+            // Limit the first tab row to only hold 6 documents
+            // if more added, place on the second row.
             if(this.documents().length > 5) {
                 this.secondRow.push(doc);
             }
             else {
                 this.documents.push(doc);
             }
-            this.reloadTabs();
+            // Redistribute the location of the documents between the first
+            // and second tab rows to mantain the size of each tab at a reasonable size.
+            this.redistributeTabs();
         }
 
         this.removeDocument = function(doc){
+            // look at both rows to find the document that shall be removed.
             self.documents.remove(function(el){
                 return el._path === doc._path;
             });
             self.secondRow.remove(function(el){
                 return el._path === doc._path;
             });
-            this.reloadTabs();
+            this.redistributeTabs();
         }
 
         this.tooltip = ko.observable(null);
@@ -334,7 +340,11 @@ define(function(require, exports, module){
             return 'inherited';
         }
         
-        this.reloadTabs = function() {
+        // grabs all the document objects held by the first and 
+        // second tab rows, calculates the correct number of tabs
+        // that can be held at the top one and redistributes the tabs
+        // between them to keep them at a reasonable size.
+        this.redistributeTabs = function() {
             var temp = this.getWorkingSet();
             this.documents([]);
             this.secondRow([]);
@@ -347,20 +357,23 @@ define(function(require, exports, module){
                 totalWidth = $(element).outerWidth(true);
             });
             
+            // this will be the maximum number of tabs that the
+            // first row can hold.
             var upperbound = Math.floor(totalWidth / 90);
-            console.log(upperbound);
-            // adds to first row up to upper bound based on size
+            
+            // adds to first row up to upper bound
             for(var i = 0; i < Math.min(upperbound, temp.length); i++) {
                 this.documents.push(temp[i]);
                 console.log(temp[i]._name)
             }
-            // adds remainder of elements from temp
+            // adds remainder of elements from temp to the second row
             for(var j = upperbound; j < temp.length; j++) {
                 this.secondRow.push(temp[j]);
             }
             this.selected(this.getCurrentDocument());
             
-            
+            // the first line of the content pane will be covered by the second
+            // row if visible, if this is the case, move it down 28px.
             if(this.secondRow().length == 0) {
                 $(".pane-content").css("padding-top", "28px");
             } else {
@@ -505,7 +518,7 @@ define(function(require, exports, module){
         }
         this.selected(this.getCurrentDocument());
         
-        this.reloadTabs();
+        this.redistributeTabs();
     }
     
     DocumentsViewModel.prototype.getWorkingSet = function(){
