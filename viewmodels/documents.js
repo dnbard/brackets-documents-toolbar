@@ -362,6 +362,13 @@ define(function(require, exports, module){
                 this.secondRow.push(temp[j]);
             }
             this.selected(this.getCurrentDocument());
+            
+            
+            if(this.secondRow().length == 0) {
+                $(".pane-content").css("padding-top", "28px");
+            } else {
+                $(".pane-content").css("padding-top", "56px");
+            }
         }
 
         this.getDocumentNameColor = function(file){
