@@ -335,6 +335,7 @@ define(function(require, exports, module){
         }
         
         this.reloadTabs = function() {
+            var temp = this.getWorkingSet();
             this.documents([]);
             this.secondRow([]);
             this.selected(null);
@@ -346,14 +347,12 @@ define(function(require, exports, module){
                 totalWidth = $(element).outerWidth(true);
             });
             
-        
-            
-            var temp = this.getWorkingSet();
             var upperbound = Math.floor(totalWidth / 90);
             console.log(upperbound);
             // adds to first row up to upper bound based on size
-            for(var i = 0; i < upperbound; i++) {
+            for(var i = 0; i < Math.min(upperbound, temp.length); i++) {
                 this.documents.push(temp[i]);
+                console.log(temp[i]._name)
             }
             // adds remainder of elements from temp
             for(var j = upperbound; j < temp.length; j++) {
