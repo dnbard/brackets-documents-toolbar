@@ -342,6 +342,7 @@ define(function(require, exports, module){
             this.secondRow([]);
             this.selected(null);
             
+            // get total width from document-holder
             var totalWidth = 0;
             var tabs = $('.brFont');
             $.each(tabs,function(index, element){
@@ -353,9 +354,11 @@ define(function(require, exports, module){
             var temp = this.getWorkingSet();
             var upperbound = Math.floor(totalWidth / 90);
             console.log(upperbound);
+            // adds to first row up to upper bound based on size
             for(var i = 0; i < upperbound; i++) {
                 this.documents.push(temp[i]);
             }
+            // adds remainder of elements from temp
             for(var j = upperbound; j < temp.length; j++) {
                 this.secondRow.push(temp[j]);
             }
