@@ -338,12 +338,22 @@ define(function(require, exports, module){
             this.documents([]);
             this.secondRow([]);
             this.selected(null);
-
+            
+            var totalWidth = 0;
+            var tabs = $('.brFont');
+            $.each(tabs,function(index, element){
+                totalWidth = $(element).outerWidth(true);
+            });
+            
+        
+            
             var temp = this.getWorkingSet();
-            for(var i = 0; i < 5; i++) {
+            var upperbound = Math.floor(totalWidth / 90);
+            console.log(upperbound);
+            for(var i = 0; i < upperbound; i++) {
                 this.documents.push(temp[i]);
             }
-            for(var j = 5; j < temp.length; j++) {
+            for(var j = upperbound; j < temp.length; j++) {
                 this.secondRow.push(temp[j]);
             }
             this.selected(this.getCurrentDocument());
