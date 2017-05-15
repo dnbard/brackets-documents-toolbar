@@ -22,7 +22,8 @@ define(function(require, exports, module){
 
         this.element = element;
         this.panelId = panelId;
-        this.documents = ko.observableArray([]);
+        this.documents = ko.observableArray([]); // Holds the documents for the first tab row
+        this.secondRow = ko.observableArray([]); // Holds the documents for the second tab row
         this.selected = ko.observable(null);
         this.selectedPath = ko.computed(function(){
             return this.selected() ? this.selected()._path : '';
@@ -116,6 +117,9 @@ define(function(require, exports, module){
                     DocumentManager.setCurrentDocument(doc);
                     if (!_.find(self.documents(), function(file){
                         return file === doc.file;
+                        // Check also that the document is located at the second row
+                    }) && !_.find(seld.secondRow(), function(file) {
+                        return file === doc.file;
                     })){
                         DocumentManager.addToWorkingSet(doc.file, -1);
                     }
@@ -174,13 +178,28 @@ define(function(require, exports, module){
         }
 
         this.addDocument = function(doc){
-            this.documents.push(doc);
+            // Limit the first tab row to only hold 6 documents
+            // if more added, place on the second row.
+            if(this.documents().length > 5) {
+                this.secondRow.push(doc);
+            }
+            else {
+                this.documents.push(doc);
+            }
+            // Redistribute the location of the documents between the first
+            // and second tab rows to mantain the size of each tab at a reasonable size.
+            this.redistributeTabs();
         }
 
         this.removeDocument = function(doc){
+            // look at both rows to find the document that shall be removed.
             self.documents.remove(function(el){
                 return el._path === doc._path;
             });
+            self.secondRow.remove(function(el){
+                return el._path === doc._path;
+            });
+            this.redistributeTabs();
         }
 
         this.tooltip = ko.observable(null);
@@ -262,6 +281,9 @@ define(function(require, exports, module){
             _.each(this.documents(), function(document){
                 fileNames.push(document._name);
             });
+            _.each(this.secondRow(), function(document){
+                fileNames.push(document._name);
+            });
 
             return fileNames;
         }, this);
@@ -316,6 +338,47 @@ define(function(require, exports, module){
                 return rule.background;
             }
             return 'inherited';
+        }
+        
+        // grabs all the document objects held by the first and 
+        // second tab rows, calculates the correct number of tabs
+        // that can be held at the top one and redistributes the tabs
+        // between them to keep them at a reasonable size.
+        this.redistributeTabs = function() {
+            var temp = this.getWorkingSet();
+            this.documents([]);
+            this.secondRow([]);
+            this.selected(null);
+            
+            // get total width from document-holder
+            var totalWidth = 0;
+            var tabs = $('.brFont');
+            $.each(tabs,function(index, element){
+                totalWidth = $(element).outerWidth(true);
+            });
+            
+            // this will be the maximum number of tabs that the
+            // first row can hold.
+            var upperbound = Math.floor(totalWidth / 90);
+            
+            // adds to first row up to upper bound based on size
+            for(var i = 0; i < Math.min(upperbound, temp.length); i++) {
+                this.documents.push(temp[i]);
+                console.log(temp[i]._name)
+            }
+            // adds remainder of elements from temp
+            for(var j = upperbound; j < temp.length; j++) {
+                this.secondRow.push(temp[j]);
+            }
+            this.selected(this.getCurrentDocument());
+            
+            // the first line of the content pane will be covered by the second
+            // row if visible, if this is the case, move it down 28px.
+            if(this.secondRow().length == 0) {
+                $(".pane-content").css("padding-top", "28px");
+            } else {
+                $(".pane-content").css("padding-top", "56px");
+            }
         }
 
         this.getDocumentNameColor = function(file){
@@ -443,10 +506,19 @@ define(function(require, exports, module){
 
     DocumentsViewModel.prototype.handlePathChanges = function(){
         this.documents([]);
+        this.secondRow([]);
         this.selected(null);
 
-        this.documents(this.getWorkingSet());
+        var temp = this.getWorkingSet();
+        for(var i = 0; i < 5; i++) {
+            this.documents.push(temp[i]);
+        }
+        for(var j = 5; j < temp.length; j++) {
+            this.secondRow.push(temp[j]);
+        }
         this.selected(this.getCurrentDocument());
+        
+        this.redistributeTabs();
     }
     
     DocumentsViewModel.prototype.getWorkingSet = function(){
