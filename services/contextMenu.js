@@ -155,13 +155,20 @@ define(function(require, exports, module){
         });
 
     }
+    
+    ContextMenuService.prototype.removeMenuItem = function(menu, command){
+        if (typeof menu._getMenuItemForCommand === 'function' && menu._getMenuItemForCommand(command)){
+            menu.removeMenuItem(command);
+        }
+    }
 
     ContextMenuService.prototype.open = function(context, event){
         var self = this,
             colorRules = storage.getKey(storageRulesKey) || {},
             reopenDocumentCommand = CommandManager.get('dt.reopenDocument');;
-
-        this.menu.removeMenuItem(this.clearRuleCommand);
+        
+        this.removeMenuItem(this.menu, this.clearRuleCommand);
+        
         this.context = context;
 
         if (_.find(colorRules, this.ruleHandler)){
@@ -170,8 +177,8 @@ define(function(require, exports, module){
         } else {
             this.addNewRuleCommand.setName(this.localization.get('commandSetColors'));
         }
-
-        this.menu.removeMenuItem(reopenDocumentCommand);
+        
+        this.removeMenuItem(this.menu, reopenDocumentCommand);
         if (closedDocumentsCollection.size() !== 0){
             reopenDocumentCommand.setName(this.localization.get('reopen') + ' ' + closedDocumentsCollection.getName());
             this.menu.addMenuItem(reopenDocumentCommand, null, CommandMenus.AFTER, 'file.close_below');
@@ -180,10 +187,10 @@ define(function(require, exports, module){
         if (!!_.find(self.lockedList, function(lockedDocumentPath){
             return lockedDocumentPath === context._path;
         })){
-            this.menu.removeMenuItem(self.lockCommand);
+            this.removeMenuItem(this.menu, self.lockCommand);
             this.menu.addMenuItem(self.unlockCommand, null, CommandMenus.BEFORE, 'dte_showOptions');
         } else {
-            this.menu.removeMenuItem(self.unlockCommand);
+            this.removeMenuItem(this.menu, self.unlockCommand);
             this.menu.addMenuItem(self.lockCommand, null, CommandMenus.BEFORE, 'dte_showOptions');
         }
 
