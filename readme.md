@@ -1,3 +1,5 @@
+**DEPRECATED, NO SUPPORT**
+
 # Brackets Document Toolbar(with tabs)
 
 Extension that adds new toolbar with a list of all open documents(tabs).
